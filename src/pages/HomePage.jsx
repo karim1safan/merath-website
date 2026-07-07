@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, BarChart3, CalendarCheck, Flame, Clock, Play, Users, Bookmark, Layers } from 'lucide-react';
+import { BookOpen, BarChart3, CalendarCheck, Flame, Clock, Play, Users, Bookmark, Layers, X } from 'lucide-react';
 import { CATEGORIES, UMMMAH_CATEGORIES, ROUTES } from '../constants';
 import useDailyStreak from '../hooks/useDailyStreak';
 import useDailyVerse from '../hooks/useDailyVerse';
+import useFridayReminder from '../hooks/useFridayReminder';
 import Card from '../components/common/Card';
 import Button from '../components/common/Button';
 
 const HomePage = () => {
   const { currentStreak, todayCompleted } = useDailyStreak();
   const { verse } = useDailyVerse();
+  const { showBanner, dismiss } = useFridayReminder();
 
   const [now, setNow] = useState(new Date());
   const [verseAudio, setVerseAudio] = useState(null);
@@ -40,6 +42,38 @@ const HomePage = () => {
 
   return (
     <div className="space-y-12">
+      {showBanner && (
+        <section className="bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl p-6 text-white relative">
+          <button
+            onClick={dismiss}
+            className="absolute top-4 left-4 p-1 rounded-lg hover:bg-white/20 transition-colors"
+            aria-label="إغلاق"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <div className="flex items-start gap-4">
+            <div className="p-3 rounded-xl bg-white/20 flex-shrink-0">
+              <BookOpen className="w-8 h-8" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold mb-1">
+                تذكير: قراءة سورة الكهف
+              </h3>
+              <p className="text-sm text-emerald-100 mb-3">
+                اليوم الجمعة، اقرأ سورة الكهف لتنال أجرها — قال ﷺ: "من قرأ سورة الكهف يوم الجمعة أضاء له من النور ما بين الجمعتين"
+              </p>
+              <Link
+                to="/quran/18"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-emerald-700 font-semibold text-sm hover:bg-emerald-50 transition-colors"
+              >
+                <BookOpen className="w-4 h-4" />
+                ابدأ القراءة
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="text-center py-12">
         <div className="flex justify-center mb-6">
           <img src="/icon.png" alt="ميراث" className="w-20 h-20 rounded-2xl" />

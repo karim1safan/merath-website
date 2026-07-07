@@ -115,4 +115,5 @@ export const STORAGE_KEYS = {
   COMPLETED_QUIZZES: 'quiz-completed',
   BOOKMARKS: 'quiz-bookmarks',
   DAILY_STREAK: 'quiz-daily-streak',
+  FRIDAY_REMINDER: 'quiz-friday-reminder',
 };
