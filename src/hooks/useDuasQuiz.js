@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { fetchDuaCategories, fetchDuaByCategory } from '../services/ummahApi';
+import { fetchDuaCategories, fetchDuaByCategory } from '../data/duas';
 import { shuffleArray } from '../utils';
 
 const useDuasQuiz = (count = 10) => {

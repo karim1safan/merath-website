@@ -47,14 +47,14 @@ const OptionButton = ({
     <button
       onClick={onClick}
       disabled={disabled || showResult}
-      className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 ease-out text-right ${
+      className={`w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 ease-out text-right ${
         getOptionStyles()
       } ${disabled || showResult ? 'cursor-default' : 'cursor-pointer'}`}
     >
-      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary-100 dark:bg-secondary-700 flex items-center justify-center text-sm font-semibold">
+      <span className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-secondary-100 dark:bg-secondary-700 flex items-center justify-center text-xs sm:text-sm font-semibold">
         {optionLabels[index]}
       </span>
-      <span className="flex-1 text-base">{option}</span>
+      <span className="flex-1 text-sm sm:text-base">{option}</span>
       {getOptionIcon()}
     </button>
   );

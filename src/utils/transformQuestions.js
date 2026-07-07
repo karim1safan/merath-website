@@ -1,10 +1,10 @@
 const CATEGORY_MAP = {
   'التفسير': 'tafseer',
-  'العقيدة': 'aqeedah',
-  'السيرة النبوية': 'sira',
+  'العقيدة': 'akida',
   'الحديث': 'hadith',
   'الفقه': 'figh',
   'التاريخ': 'history',
+  'اللغة العربية': 'arabia',
 };
 
 export function mapCategoryName(arabicName) {

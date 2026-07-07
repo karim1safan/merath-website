@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { BarChart3 } from 'lucide-react';
 import { ROUTES } from '../constants';
@@ -11,11 +11,13 @@ const ResultPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { addQuizResult } = useStatistics();
+  const hasSavedRef = useRef(false);
 
   const result = location.state;
 
   useEffect(() => {
-    if (result) {
+    if (result && !hasSavedRef.current) {
+      hasSavedRef.current = true;
       addQuizResult({
         score: result.score,
         totalQuestions: result.totalQuestions,

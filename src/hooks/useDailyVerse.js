@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchRandomVerse } from '../services/ummahApi';
+import { fetchRandomVerse } from '../services/quranTextApi';
 import { getTodayString } from '../utils';
 
 const CACHE_KEY = 'quiz-daily-verse';

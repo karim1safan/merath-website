@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { fetchHadithFromCDN } from '../services/ummahApi';
+import { fetchHadithFromCDN } from '../services/hadithApi';
 import { shuffleArray } from '../utils';
 
 const COLLECTIONS = [
@@ -56,7 +56,7 @@ const useHadithQuiz = (count = 10) => {
 
           allQuestions.push({
             id: `hadith-q-${i}-source`,
-            question: `من أي كتاب هذا الحديث:\n"${hadith.text.substring(0, 120)}..."`,
+            question: `من أي كتاب هذا الحديث:\n"${hadith.text}"`,
             options,
             correctAnswer: options.indexOf(correctName),
             explanation: `الحديث رقم ${hadith.hadithnumber} من ${correctName}`,
@@ -110,7 +110,7 @@ const useHadithQuiz = (count = 10) => {
 
           allQuestions.push({
             id: `hadith-q-${i}-grade`,
-            question: `ما درجة هذا الحديث:\n"${hadith.text.substring(0, 120)}..."`,
+            question: `ما درجة هذا الحديث:\n"${hadith.text}"`,
             options,
             correctAnswer: options.indexOf(correctGrade),
             explanation: `الحديث من ${hadith.collectionName} - الدرجة: ${correctGrade}`,

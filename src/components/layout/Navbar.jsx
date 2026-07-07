@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Moon, Sun, Bookmark, CalendarCheck, Users, BookOpen, Home, LayoutGrid, BarChart3 } from 'lucide-react';
+import { Moon, Sun, Bookmark, CalendarCheck, Users, BookOpen, Home, LayoutGrid, BarChart3, Search } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import useBookmarks from '../../hooks/useBookmarks';
 import { ROUTES } from '../../constants';
@@ -13,6 +13,7 @@ const Navbar = () => {
     { path: ROUTES.HOME, label: 'الرئيسية' },
     { path: ROUTES.DAILY, label: 'التحدي اليومي' },
     { path: ROUTES.CATEGORIES, label: 'الأقسام' },
+    { path: ROUTES.SEARCH, label: 'بحث' },
     { path: ROUTES.QURAN_EXPLORER, label: 'استكشاف القرآن' },
     { path: ROUTES.PERSONALITIES, label: 'شخصيات' },
     { path: ROUTES.BOOKMARKS, label: 'المحفوظات', count: bookmarks.length },
@@ -50,6 +51,7 @@ const Navbar = () => {
                   {link.path === ROUTES.HOME && <Home className="w-4 h-4" />}
                   {link.path === ROUTES.DAILY && <CalendarCheck className="w-4 h-4" />}
                   {link.path === ROUTES.CATEGORIES && <LayoutGrid className="w-4 h-4" />}
+                  {link.path === ROUTES.SEARCH && <Search className="w-4 h-4" />}
                   {link.path === ROUTES.QURAN_EXPLORER && <BookOpen className="w-4 h-4" />}
                   {link.path === ROUTES.PERSONALITIES && <Users className="w-4 h-4" />}
                   {link.path === ROUTES.BOOKMARKS && <Bookmark className="w-4 h-4" />}
@@ -95,6 +97,7 @@ const Navbar = () => {
                 {link.path === ROUTES.HOME && <Home className="w-4 h-4" />}
                 {link.path === ROUTES.DAILY && <CalendarCheck className="w-4 h-4" />}
                 {link.path === ROUTES.CATEGORIES && <LayoutGrid className="w-4 h-4" />}
+                {link.path === ROUTES.SEARCH && <Search className="w-4 h-4" />}
                 {link.path === ROUTES.QURAN_EXPLORER && <BookOpen className="w-4 h-4" />}
                 {link.path === ROUTES.PERSONALITIES && <Users className="w-4 h-4" />}
                 {link.path === ROUTES.BOOKMARKS && <Bookmark className="w-4 h-4" />}

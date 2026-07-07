@@ -1,15 +1,23 @@
 import { useState, useEffect } from 'react';
-import { fetchRandomQuestions, fetchQuestionsByCategory } from '../services/quizApi';
+import {
+  fetchRandomQuestions,
+  fetchQuestionsByCategory,
+  fetchCategories,
+} from '../services/quizApi';
 import { transformApiQuestions } from '../utils/transformQuestions';
 
-const CATEGORY_API_MAP = {
-  tafseer: 1,
-  aqeedah: 2,
-  sira: 3,
-  hadith: 4,
-  figh: 5,
-  history: 6,
-};
+let categoryMapCache = null;
+
+async function getCategoryMap() {
+  if (categoryMapCache) return categoryMapCache;
+
+  const categories = await fetchCategories();
+  categoryMapCache = {};
+  categories.forEach((cat) => {
+    categoryMapCache[cat.englishName] = cat.id;
+  });
+  return categoryMapCache;
+}
 
 function useQuizApi(category, count = 20) {
   const [questions, setQuestions] = useState([]);
@@ -26,10 +34,16 @@ function useQuizApi(category, count = 20) {
       try {
         let rawData;
 
-        if (category && CATEGORY_API_MAP[category]) {
-          const categoryId = CATEGORY_API_MAP[category];
-          const result = await fetchQuestionsByCategory(categoryId, 1, count);
-          rawData = result.questions || [];
+        if (category) {
+          const categoryMap = await getCategoryMap();
+          const categoryId = categoryMap[category];
+
+          if (categoryId) {
+            const result = await fetchQuestionsByCategory(categoryId, 1, count);
+            rawData = result.questions || [];
+          } else {
+            rawData = await fetchRandomQuestions(count);
+          }
         } else {
           rawData = await fetchRandomQuestions(count);
         }

@@ -15,14 +15,14 @@ const QuestionCard = ({
   const difficultyInfo = DIFFICULTY_LEVELS[question.difficulty];
 
   return (
-    <div className="bg-white dark:bg-secondary-800 rounded-2xl shadow-lg p-6 md:p-8 transition-colors duration-200">
-      <div className="flex items-center justify-between mb-6">
-        <Badge variant="primary" size="md">
+    <div className="bg-white dark:bg-secondary-800 rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 transition-colors duration-200">
+      <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
+        <Badge variant="primary" size="sm">
           السؤال {questionNumber} من {totalQuestions}
         </Badge>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           {question.difficulty && (
-            <Badge variant={question.difficulty === 'easy' ? 'success' : question.difficulty === 'medium' ? 'warning' : 'danger'} size="md">
+            <Badge variant={question.difficulty === 'easy' ? 'success' : question.difficulty === 'medium' ? 'warning' : 'danger'} size="sm">
               {difficultyInfo?.label || question.difficulty}
             </Badge>
           )}

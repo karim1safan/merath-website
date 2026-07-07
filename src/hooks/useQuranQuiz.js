@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { fetchQuranSurah } from '../services/ummahApi';
+import { fetchQuranSurah } from '../services/quranTextApi';
 import { shuffleArray } from '../utils';
 
 const SURAH_NUMBERS = [1, 2, 3, 18, 36, 55, 67, 73, 108, 112, 113, 114];

@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { fetchAsmaUlHusna } from '../services/ummahApi';
+import { fetchAsmaUlHusna } from '../data/asmaUlHusna';
 import { shuffleArray } from '../utils';
 
 const useNamesQuiz = (count = 10) => {

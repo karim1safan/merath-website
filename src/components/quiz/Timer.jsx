@@ -18,7 +18,7 @@ const Timer = ({ timeLeft, totalTime, className = '' }) => {
 
   return (
     <div className={`flex flex-col items-center gap-2 ${className}`}>
-      <div className={`text-3xl font-bold ${getTimerColor()} ${isLow ? 'animate-pulse' : ''}`}>
+      <div className={`text-2xl sm:text-3xl font-bold ${getTimerColor()} ${isLow ? 'animate-pulse' : ''}`}>
         {formatDuration(timeLeft)}
       </div>
       <div className="w-full h-2 bg-secondary-200 dark:bg-secondary-700 rounded-full overflow-hidden">

@@ -20,6 +20,7 @@ const NamesQuizPage = lazy(() => import('./pages/NamesQuizPage'));
 const DuasQuizPage = lazy(() => import('./pages/DuasQuizPage'));
 const QuranExplorerPage = lazy(() => import('./pages/QuranExplorerPage'));
 const QuranSurahPage = lazy(() => import('./pages/QuranSurahPage'));
+const SearchPage = lazy(() => import('./pages/SearchPage'));
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-[400px]">
@@ -50,6 +51,7 @@ function App() {
               <Route path="/quiz/duas" element={<DuasQuizPage />} />
               <Route path="/quran" element={<QuranExplorerPage />} />
               <Route path="/quran/:surahNumber" element={<QuranSurahPage />} />
+              <Route path="/search" element={<SearchPage />} />
             </Routes>
           </Suspense>
         </MainLayout>

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Search } from 'lucide-react';
+import { BookOpen, Search, Loader2 } from 'lucide-react';
 import { useQuranExplorer } from '../hooks/useQuranExplorer';
 import Card from '../components/common/Card';
+import EmptyState from '../components/common/EmptyState';
 
 const QuranExplorerPage = () => {
-  const { surahs } = useQuranExplorer();
+  const { surahs, loading, error } = useQuranExplorer();
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredSurahs = surahs.filter((surah) => {
@@ -13,11 +14,27 @@ const QuranExplorerPage = () => {
     const q = searchQuery.toLowerCase();
     return (
       surah.name.includes(q) ||
-      surah.english.toLowerCase().includes(q) ||
-      surah.meaning.toLowerCase().includes(q) ||
-      surah.number.toString() === q
+      surah.id.toString() === q
     );
   });
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="w-12 h-12 text-primary-600 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <EmptyState
+        icon={<BookOpen className="w-16 h-16 text-red-500" />}
+        title="خطأ في تحميل السور"
+        description="حدث خطأ أثناء الاتصال بالخادم. يرجى المحاولة مرة أخرى."
+      />
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -50,24 +67,25 @@ const QuranExplorerPage = () => {
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredSurahs.map((surah) => (
-          <Link key={surah.number} to={`/quran/${surah.number}`}>
+          <Link key={surah.id} to={`/quran/${surah.id}`}>
             <Card hover className="text-center">
               <div className="text-sm text-secondary-500 dark:text-secondary-400 mb-1">
-                {surah.number}
+                {surah.id}
               </div>
-              <h3 className="text-lg font-bold text-secondary-800 dark:text-secondary-200 mb-1">
+              <h3 className="text-lg font-bold text-secondary-800 dark:text-secondary-200 mb-2">
                 {surah.name}
               </h3>
-              <p className="text-xs text-primary-600 dark:text-primary-400 mb-1">
-                {surah.english}
-              </p>
-              <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                {surah.meaning}
-              </p>
-              <div className="flex items-center justify-center gap-2 mt-2 text-xs text-secondary-400">
-                <span>{surah.verses} آية</span>
-                <span>•</span>
-                <span>{surah.place}</span>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                  surah.makkia
+                    ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
+                    : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                }`}>
+                  {surah.makkia ? 'مكية' : 'مدنية'}
+                </span>
+              </div>
+              <div className="text-xs text-secondary-400 dark:text-secondary-500">
+                صفحات {surah.start_page} - {surah.end_page}
               </div>
             </Card>
           </Link>

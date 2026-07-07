@@ -36,6 +36,7 @@ const HomePage = () => {
   const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
   const arabicDate = now.toLocaleDateString('ar-SA', dateOptions);
   const arabicTime = now.toLocaleTimeString('ar-SA', timeOptions);
+  const hijriDate = now.toLocaleDateString('ar-SA-u-ca-islamic', { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
     <div className="space-y-12">
@@ -49,11 +50,17 @@ const HomePage = () => {
         <p className="text-lg text-secondary-600 dark:text-secondary-400 max-w-2xl mx-auto mb-4">
           اختبر معلوماتك في العلوم الإسلامية عبر اختبارات تفاعلية ممتعة
         </p>
-        <div className="flex items-center justify-center gap-2 mb-8 text-secondary-500 dark:text-secondary-400">
-          <Clock className="w-4 h-4" />
-          <span className="text-sm">{arabicDate}</span>
-          <span className="text-secondary-300 dark:text-secondary-600">|</span>
-          <span className="text-sm font-mono" dir="ltr">{arabicTime}</span>
+        <div className="inline-flex flex-col items-center gap-3 px-6 py-4 rounded-2xl bg-secondary-50 dark:bg-secondary-800/50 border border-secondary-200 dark:border-secondary-700 mb-8">
+          <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400">
+            <Clock className="w-5 h-5" />
+            <span className="text-2xl sm:text-3xl font-bold font-mono" dir="ltr">{arabicTime}</span>
+          </div>
+          <div className="h-px w-full bg-secondary-200 dark:bg-secondary-700" />
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <span className="text-lg font-semibold text-secondary-800 dark:text-secondary-200">{hijriDate}</span>
+            <span className="hidden sm:inline text-secondary-300 dark:text-secondary-600">|</span>
+            <span className="text-base text-secondary-500 dark:text-secondary-400">{arabicDate}</span>
+          </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link to={ROUTES.CATEGORIES}>

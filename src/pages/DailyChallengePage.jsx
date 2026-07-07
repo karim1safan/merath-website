@@ -75,6 +75,7 @@ const DailyChallengePage = () => {
     completed,
     timeLeft,
     answeredCount,
+    shuffledQuestions,
     selectAnswer,
     goToNext,
     goToPrevious,
@@ -96,7 +97,7 @@ const DailyChallengePage = () => {
         timeSpent: DAILY_TIMER - timeLeft,
         category: 'daily',
         answers,
-        questions,
+        questions: shuffledQuestions,
         isDailyChallenge: true,
       },
       replace: true,
@@ -108,7 +109,7 @@ const DailyChallengePage = () => {
     percentage,
     timeLeft,
     answers,
-    questions,
+    shuffledQuestions,
     markDailyCompleted,
   ]);
 
@@ -239,21 +240,23 @@ const DailyChallengePage = () => {
         showExplanation={selectedAnswer !== undefined}
       />
 
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-2 sm:gap-4">
         <Button
           onClick={goToPrevious}
           variant="secondary"
+          size="sm"
           disabled={currentIndex === 0}
+          className="text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-2"
         >
           السابق
         </Button>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-[50%] scrollbar-hide">
           {Array.from({ length: totalQuestions }, (_, i) => (
             <button
               key={i}
               onClick={() => goToQuestion(i)}
-              className={`w-3 h-3 rounded-full transition-colors duration-200 ${
+              className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full flex-shrink-0 transition-colors duration-200 ${
                 i === currentIndex
                   ? 'bg-primary-600 dark:bg-primary-400'
                   : getQuestionStatus(i) === 'correct'
@@ -267,11 +270,11 @@ const DailyChallengePage = () => {
         </div>
 
         {currentIndex === totalQuestions - 1 ? (
-          <Button onClick={finishQuiz} variant="primary">
+          <Button onClick={finishQuiz} variant="primary" size="sm" className="text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-2">
             إنهاء
           </Button>
         ) : (
-          <Button onClick={goToNext} variant="primary">
+          <Button onClick={goToNext} variant="primary" size="sm" className="text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-2">
             التالي
           </Button>
         )}

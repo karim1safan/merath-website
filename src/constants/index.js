@@ -1,4 +1,4 @@
-import { BookOpen, Shield, Moon, ScrollText, Scale, History, Star, Heart } from 'lucide-react';
+import { BookOpen, Shield, ScrollText, Scale, History, Languages, Star, Heart } from 'lucide-react';
 
 export const ROUTES = {
   HOME: '/',
@@ -17,6 +17,7 @@ export const ROUTES = {
   DUAS_QUIZ: '/quiz/duas',
   QURAN_EXPLORER: '/quran',
   QURAN_SURAH: '/quran/:surahNumber',
+  SEARCH: '/search',
 };
 
 export const CATEGORIES = [
@@ -28,18 +29,11 @@ export const CATEGORIES = [
     color: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
   },
   {
-    id: 'aqeedah',
+    id: 'akida',
     name: 'العقيدة',
     description: 'اختبارات حول العقيدة الإسلامية',
     icon: Shield,
     color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-  },
-  {
-    id: 'sira',
-    name: 'السيرة النبوية',
-    description: 'اختبارات حول حياة النبي ﷺ',
-    icon: Moon,
-    color: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
   },
   {
     id: 'hadith',
@@ -61,6 +55,13 @@ export const CATEGORIES = [
     description: 'اختبارات حول التاريخ الإسلامي',
     icon: History,
     color: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
+  },
+  {
+    id: 'arabia',
+    name: 'اللغة العربية',
+    description: 'اختبارات حول اللغة العربية وقواعدها',
+    icon: Languages,
+    color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
   },
 ];
 
