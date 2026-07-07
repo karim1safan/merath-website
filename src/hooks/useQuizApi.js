@@ -16,10 +16,8 @@ async function getCategoryMap() {
   categories.forEach((cat) => {
     categoryMapCache[cat.englishName] = cat.id;
   });
-  // sira uses the same API category as history (التاريخ) — topic "العهد النبوي"
-  if (categoryMapCache.history) {
-    categoryMapCache.sira = categoryMapCache.history;
-  }
+  // sira uses API category 5 (التاريخ — topic "العهد النبوي")
+  categoryMapCache.sira = 5;
   return categoryMapCache;
 }
 

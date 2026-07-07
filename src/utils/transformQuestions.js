@@ -3,9 +3,9 @@ const CATEGORY_MAP = {
   'العقيدة': 'akida',
   'الحديث': 'hadith',
   'الفقه': 'figh',
-  'التاريخ': 'history',
-  'اللغة العربية': 'arabia',
+  'التاريخ': 'sira',
   'العهد النبوي': 'sira',
+  'اللغة العربية': 'arabia',
 };
 
 export function mapCategoryName(arabicName) {

@@ -1,4 +1,4 @@
-import { BookOpen, Shield, ScrollText, Scale, History, Languages, Moon, Star, Heart } from 'lucide-react';
+import { BookOpen, Shield, ScrollText, Scale, Languages, Moon, Star, Heart } from 'lucide-react';
 
 export const ROUTES = {
   HOME: '/',
@@ -48,13 +48,6 @@ export const CATEGORIES = [
     description: 'اختبارات حول أحكام الفقه الإسلامي',
     icon: Scale,
     color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-  },
-  {
-    id: 'history',
-    name: 'التاريخ',
-    description: 'اختبارات حول التاريخ الإسلامي',
-    icon: History,
-    color: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
   },
   {
     id: 'sira',
