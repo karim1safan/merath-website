@@ -21,12 +21,14 @@ async function getCategoryMap() {
   return categoryMapCache;
 }
 
-function useQuizApi(category, count = 20) {
-  const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
+function useQuizApi(category, count = 20, initialQuestions = null) {
+  const [questions, setQuestions] = useState(initialQuestions || []);
+  const [loading, setLoading] = useState(!initialQuestions);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (initialQuestions) return;
+
     let cancelled = false;
 
     async function loadQuestions() {
@@ -72,7 +74,7 @@ function useQuizApi(category, count = 20) {
     return () => {
       cancelled = true;
     };
-  }, [category, count]);
+  }, [category, count, initialQuestions]);
 
   return { questions, loading, error };
 }

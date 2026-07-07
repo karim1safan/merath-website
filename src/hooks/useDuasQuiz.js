@@ -48,7 +48,7 @@ const useDuasQuiz = (count = 10) => {
             explanation: `${dua.title} - المصدر: ${dua.source}`,
             difficulty: 'easy',
             category: 'duas',
-            topic: '分类 الدعاء',
+            topic: 'أنواع الدعاء',
           });
         } else if (questionType < 0.7) {
           const wrongDuas = duas

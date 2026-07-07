@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HandHeart } from 'lucide-react';
+import { BookOpenText } from 'lucide-react';
 import { ROUTES } from '../constants';
-import useDuasQuiz from '../hooks/useDuasQuiz';
+import useGharibQuiz from '../hooks/useGharibQuiz';
 import useQuiz from '../hooks/useQuiz';
 import QuestionCard from '../components/quiz/QuestionCard';
 import ProgressBar from '../components/quiz/ProgressBar';
@@ -11,13 +11,13 @@ import Button from '../components/common/Button';
 import Spinner from '../components/common/Spinner';
 import EmptyState from '../components/common/EmptyState';
 
-const DuasQuizPage = () => {
+const GharibQuizPage = () => {
   const navigate = useNavigate();
   const [timerDuration, setTimerDuration] = useState(0);
   const [showTimerSelect, setShowTimerSelect] = useState(true);
   const hasNavigatedRef = useRef(false);
 
-  const { questions, loading, error } = useDuasQuiz(10);
+  const { questions, loading, error } = useGharibQuiz(10);
 
   const {
     currentQuestion,
@@ -48,7 +48,7 @@ const DuasQuizPage = () => {
         totalQuestions,
         percentage,
         timeSpent: timerDuration - timeLeft,
-        category: 'duas',
+        category: 'gharib',
         answers,
         questions: shuffledQuestions,
       },
@@ -80,9 +80,9 @@ const DuasQuizPage = () => {
   if (error) {
     return (
       <EmptyState
-        icon={<HandHeart className="w-16 h-16 text-red-500" />}
+        icon={<BookOpenText className="w-16 h-16 text-red-500" />}
         title="خطأ في تحميل الأسئلة"
-        description="حدث خطأ أثناء الاتصال بالخادم. يرجى المحاولة مرة أخرى."
+        description="حدث خطأ أثناء تحميل بيانات غريب القرآن. يرجى المحاولة مرة أخرى."
         actionLabel="العودة"
         onAction={() => navigate(ROUTES.HOME)}
       />
@@ -92,9 +92,9 @@ const DuasQuizPage = () => {
   if (questions.length === 0) {
     return (
       <EmptyState
-        icon={<HandHeart className="w-16 h-16" />}
+        icon={<BookOpenText className="w-16 h-16" />}
         title="لا توجد أسئلة"
-        description="لم يتم العثور على أسئلة الأدعية"
+        description="لم يتم العثور على أسئلة غريب القرآن"
         actionLabel="العودة"
         onAction={() => navigate(ROUTES.HOME)}
       />
@@ -105,18 +105,18 @@ const DuasQuizPage = () => {
     return (
       <div className="max-w-md mx-auto text-center py-12">
         <div className="flex justify-center mb-6">
-          <div className="p-4 rounded-2xl bg-rose-100 dark:bg-rose-900/30">
-            <HandHeart className="w-12 h-12 text-rose-600 dark:text-rose-400" />
+          <div className="p-4 rounded-2xl bg-teal-100 dark:bg-teal-900/30">
+            <BookOpenText className="w-12 h-12 text-teal-600 dark:text-teal-400" />
           </div>
         </div>
         <h1 className="text-3xl font-bold text-secondary-800 dark:text-secondary-200 mb-2">
-          اختبار الأدعية النبوية
+          اختبار غريب القرآن
         </h1>
         <p className="text-secondary-600 dark:text-secondary-400 mb-2">
-          {questions.length} سؤال من أدعية القرآن والسنة
+          اختبار من كتاب السراج في بيان غريب القرآن
         </p>
         <p className="text-sm text-secondary-500 dark:text-secondary-400 mb-8">
-          تعرف على أدعية الصباح والمساء والسفر والمزيد
+          تعرف على المعاني الغريبة للكلمات القرآنية
         </p>
 
         <div className="bg-white dark:bg-secondary-800 rounded-2xl shadow-lg p-6 mb-8">
@@ -198,4 +198,4 @@ const DuasQuizPage = () => {
   );
 };
 
-export default DuasQuizPage;
+export default GharibQuizPage;

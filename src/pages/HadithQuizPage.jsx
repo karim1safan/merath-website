@@ -123,11 +123,13 @@ const HadithQuizPage = () => {
           <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-4">
             اختر مدة الاختبار
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-3" role="radiogroup" aria-label="مدة الاختبار">
             {[0, 300, 600, 1200].map((duration) => (
               <button
                 key={duration}
                 onClick={() => setTimerDuration(duration)}
+                role="radio"
+                aria-checked={timerDuration === duration}
                 className={`w-full p-3 rounded-xl border-2 transition-all duration-200 ${
                   timerDuration === duration
                     ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
@@ -167,11 +169,13 @@ const HadithQuizPage = () => {
         <Button onClick={goToPrevious} variant="secondary" size="sm" disabled={currentIndex === 0} className="text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-2">
           السابق
         </Button>
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-[50%] scrollbar-hide">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-[50%] scrollbar-hide" role="group" aria-label="التنقل بين الأسئلة">
           {Array.from({ length: totalQuestions }, (_, i) => (
             <button
               key={i}
               onClick={() => goToQuestion(i)}
+              aria-label={`السؤال ${i + 1}`}
+              aria-current={i === currentIndex ? 'true' : undefined}
               className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full flex-shrink-0 transition-colors duration-200 ${
                 i === currentIndex
                   ? 'bg-primary-600 dark:bg-primary-400'

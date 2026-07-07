@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Moon, Sun, Bookmark, CalendarCheck, Users, BookOpen, Home, LayoutGrid, BarChart3, Search } from 'lucide-react';
+import { Moon, Sun, Bookmark, CalendarCheck, Users, BookOpen, Home, LayoutGrid, BarChart3, Search, ScrollText } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import useBookmarks from '../../hooks/useBookmarks';
 import { ROUTES } from '../../constants';
@@ -16,6 +16,7 @@ const Navbar = () => {
     { path: ROUTES.SEARCH, label: 'بحث' },
     { path: ROUTES.QURAN_EXPLORER, label: 'استكشاف القرآن' },
     { path: ROUTES.PERSONALITIES, label: 'شخصيات' },
+    { path: ROUTES.SEERAH, label: 'السيرة' },
     { path: ROUTES.BOOKMARKS, label: 'المحفوظات', count: bookmarks.length },
     { path: ROUTES.STATISTICS, label: 'الإحصائيات' },
   ];
@@ -54,6 +55,7 @@ const Navbar = () => {
                   {link.path === ROUTES.SEARCH && <Search className="w-4 h-4" />}
                   {link.path === ROUTES.QURAN_EXPLORER && <BookOpen className="w-4 h-4" />}
                   {link.path === ROUTES.PERSONALITIES && <Users className="w-4 h-4" />}
+                  {link.path === ROUTES.SEERAH && <ScrollText className="w-4 h-4" />}
                   {link.path === ROUTES.BOOKMARKS && <Bookmark className="w-4 h-4" />}
                   {link.path === ROUTES.STATISTICS && <BarChart3 className="w-4 h-4" />}
                   {link.label}
@@ -100,6 +102,7 @@ const Navbar = () => {
                 {link.path === ROUTES.SEARCH && <Search className="w-4 h-4" />}
                 {link.path === ROUTES.QURAN_EXPLORER && <BookOpen className="w-4 h-4" />}
                 {link.path === ROUTES.PERSONALITIES && <Users className="w-4 h-4" />}
+                {link.path === ROUTES.SEERAH && <ScrollText className="w-4 h-4" />}
                 {link.path === ROUTES.BOOKMARKS && <Bookmark className="w-4 h-4" />}
                 {link.path === ROUTES.STATISTICS && <BarChart3 className="w-4 h-4" />}
                 {link.label}

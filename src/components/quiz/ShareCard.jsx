@@ -132,7 +132,7 @@ const ShareCard = ({ score, totalQuestions, percentage, timeSpent, category }) =
   }, [drawCard, percentage, categoryName, handleDownload]);
 
   const handleCopyText = useCallback(() => {
-    const text = `获得了 ${percentage}% في ميراث - ${categoryName}\n✅ ${score}Correct | ❌ ${totalQuestions - score}Wrong | ⏱ ${formatTime(timeSpent)}`;
+    const text = `حصلت على ${percentage}% في ميراث - ${categoryName}\n✅ ${score} إجابة صحيحة | ❌ ${totalQuestions - score} إجابة خاطئة | ⏱ ${formatTime(timeSpent)}`;
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);

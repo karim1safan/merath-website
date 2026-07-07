@@ -121,11 +121,13 @@ const ReviewPage = () => {
           السابق
         </Button>
 
-        <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto max-w-[50%] scrollbar-hide">
+        <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto max-w-[50%] scrollbar-hide" role="group" aria-label="التنقل بين الأسئلة">
           {questions.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
+              aria-label={`السؤال ${i + 1}`}
+              aria-current={i === currentIndex ? 'true' : undefined}
               className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full flex-shrink-0 transition-colors duration-200 ${
                 i === currentIndex
                   ? 'bg-primary-600 dark:bg-primary-400'

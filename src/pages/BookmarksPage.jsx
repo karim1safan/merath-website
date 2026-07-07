@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Bookmark, Trash2, ExternalLink } from 'lucide-react';
 import useBookmarks from '../hooks/useBookmarks';
+import { ROUTES } from '../constants';
 import Card from '../components/common/Card';
 import Button from '../components/common/Button';
 import Badge from '../components/common/Badge';
@@ -19,7 +20,7 @@ const BookmarksPage = () => {
         title="لا توجد أسئلة محفوظة"
         description="يمكنك حفظ الأسئلة أثناء الاختبار أو المراجعة للرجوع إليها لاحقاً"
         actionLabel="ابدأ اختباراً"
-        onAction={() => navigate('/categories')}
+        onAction={() => navigate(ROUTES.CATEGORIES)}
       />
     );
   }
@@ -111,11 +112,13 @@ const BookmarksPage = () => {
           السابق
         </Button>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1" role="group" aria-label="التنقل بين المحفوظات">
           {bookmarks.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
+              aria-label={`المحفوظ ${i + 1}`}
+              aria-current={i === currentIndex ? 'true' : undefined}
               className={`w-2 h-2 rounded-full transition-colors duration-200 ${
                 i === currentIndex
                   ? 'bg-primary-600 dark:bg-primary-400'
@@ -127,7 +130,7 @@ const BookmarksPage = () => {
 
         {currentIndex === bookmarks.length - 1 ? (
           <Button
-            onClick={() => navigate('/categories')}
+            onClick={() => navigate(ROUTES.CATEGORIES)}
             variant="primary"
           >
             إنهاء

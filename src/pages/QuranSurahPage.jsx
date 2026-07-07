@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowRight, Play, Pause, ChevronDown, Loader2 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useQuranSurah, useReciters, useTafasir } from '../hooks/useQuranExplorer';
+import { ROUTES } from '../constants';
 import Spinner from '../components/common/Spinner';
 import EmptyState from '../components/common/EmptyState';
 import Card from '../components/common/Card';
@@ -13,7 +14,14 @@ const QuranSurahPage = () => {
   const { reciters } = useReciters();
   const { tafasir } = useTafasir();
 
-  const [selectedReciter, setSelectedReciter] = useState(null);
+  const defaultReciter = reciters.find((r) =>
+    r.moshaf?.some((m) => m.surah_list?.split(',').includes(String(surahNumber)))
+  );
+  
+  const [selectedReciter, setSelectedReciter] = useState(() => {
+    if (defaultReciter) return defaultReciter;
+    return null;
+  });
   const [currentAudio, setCurrentAudio] = useState(null);
   const [playingIndex, setPlayingIndex] = useState(null);
   const [showReciterDropdown, setShowReciterDropdown] = useState(false);
@@ -22,33 +30,38 @@ const QuranSurahPage = () => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    if (reciters.length > 0 && !selectedReciter) {
-      const defaultReciter = reciters.find((r) =>
-        r.moshaf?.some((m) => m.surah_list?.split(',').includes(String(surahNumber)))
-      );
-      if (defaultReciter) {
-        setSelectedReciter(defaultReciter);
-      }
+    if (defaultReciter && !selectedReciter) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelectedReciter(defaultReciter);
     }
-  }, [reciters, surahNumber, selectedReciter]);
+  }, [defaultReciter, selectedReciter]);
 
   useEffect(() => {
-    if (tafasir.length > 0) {
+    const fetchTafasir = async () => {
+      if (tafasir.length === 0) return;
+      
       setLoadingTafasir(true);
       const tafsirId = tafasir[0]?.id;
-      if (tafsirId) {
-        fetch(`https://www.mp3quran.net/api/v3/tafsir?tafsir=${tafsirId}&language=ar`)
-          .then((res) => res.json())
-          .then((json) => {
-            const entries = json.tafasir?.soar?.filter(
-              (s) => s.sura_id === Number(surahNumber)
-            ) || [];
-            setSurahTafasir(entries);
-          })
-          .catch(() => setSurahTafasir([]))
-          .finally(() => setLoadingTafasir(false));
+      if (!tafsirId) {
+        setLoadingTafasir(false);
+        return;
       }
-    }
+      
+      try {
+        const res = await fetch(`https://www.mp3quran.net/api/v3/tafsir?tafsir=${tafsirId}&language=ar`);
+        const json = await res.json();
+        const entries = json.tafasir?.soar?.filter(
+          (s) => s.sura_id === Number(surahNumber)
+        ) || [];
+        setSurahTafasir(entries);
+      } catch {
+        setSurahTafasir([]);
+      } finally {
+        setLoadingTafasir(false);
+      }
+    };
+    
+    fetchTafasir();
   }, [tafasir, surahNumber]);
 
   useEffect(() => {
@@ -80,7 +93,9 @@ const QuranSurahPage = () => {
     }
     if (!audioUrl) return;
     const audio = new Audio(audioUrl);
-    audio.play();
+    audio.play().catch((error) => {
+      console.error('Error playing audio:', error);
+    });
     audio.onended = () => {
       setCurrentAudio(null);
       setPlayingIndex(null);
@@ -111,7 +126,7 @@ const QuranSurahPage = () => {
         title="خطأ في تحميل السورة"
         description="حدث خطأ أثناء الاتصال بالخادم"
         actionLabel="العودة للاستكشاف"
-        onAction={() => navigate('/quran')}
+        onAction={() => navigate(ROUTES.QURAN_EXPLORER)}
       />
     );
   }
@@ -121,7 +136,7 @@ const QuranSurahPage = () => {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <button
-        onClick={() => navigate('/quran')}
+        onClick={() => navigate(ROUTES.QURAN_EXPLORER)}
         className="inline-flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline"
       >
         <ArrowRight className="w-4 h-4" />

@@ -12,10 +12,22 @@ const Card = ({
     ? 'hover:shadow-xl hover:-translate-y-1 cursor-pointer'
     : '';
 
+  const isClickable = !!onClick;
+
+  const handleKeyDown = (e) => {
+    if (isClickable && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick(e);
+    }
+  };
+
   return (
     <div
       className={`${baseStyles} ${hoverStyles} ${className}`}
       onClick={onClick}
+      role={isClickable ? 'button' : undefined}
+      tabIndex={isClickable ? 0 : undefined}
+      onKeyDown={isClickable ? handleKeyDown : undefined}
       {...props}
     >
       {children}

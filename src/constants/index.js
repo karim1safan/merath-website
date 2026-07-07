@@ -1,9 +1,10 @@
-import { BookOpen, Shield, ScrollText, Scale, Languages, Moon, Star, Heart } from 'lucide-react';
+import { BookOpen, Shield, ScrollText, Scale, Languages, Moon, Star, Heart, BookOpenText } from 'lucide-react';
 
 export const ROUTES = {
   HOME: '/',
   CATEGORIES: '/categories',
   QUIZ: '/quiz/:category',
+  QUIZ_SEARCH: '/quiz/search',
   RESULT: '/result',
   REVIEW: '/review',
   STATISTICS: '/statistics',
@@ -15,9 +16,13 @@ export const ROUTES = {
   HADITH_QUIZ: '/quiz/hadith',
   NAMES_QUIZ: '/quiz/names',
   DUAS_QUIZ: '/quiz/duas',
+  GHARIB_QUIZ: '/quiz/gharib',
   QURAN_EXPLORER: '/quran',
   QURAN_SURAH: '/quran/:surahNumber',
   SEARCH: '/search',
+  SEERAH: '/seerah',
+  SEERAH_BATTLES: '/seerah/battles',
+  SEERAH_BATTLE_DETAIL: '/seerah/battles/:id',
 };
 
 export const CATEGORIES = [
@@ -93,6 +98,13 @@ export const UMMMAH_CATEGORIES = [
     description: 'اختبار الأدعية الواردة في القرآن والسنة',
     icon: Heart,
     color: 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400',
+  },
+  {
+    id: 'gharib',
+    name: 'غريب القرآن',
+    description: 'اختبار من كتاب السراج في بيان غريب القرآن',
+    icon: BookOpenText,
+    color: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
   },
 ];
 

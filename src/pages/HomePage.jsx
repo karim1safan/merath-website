@@ -29,7 +29,9 @@ const HomePage = () => {
       return;
     }
     const audio = new Audio(verse.audio);
-    audio.play();
+    audio.play().catch((error) => {
+      console.error('Error playing audio:', error);
+    });
     audio.onended = () => setVerseAudio(null);
     setVerseAudio(audio);
   };
@@ -280,6 +282,17 @@ const HomePage = () => {
               </h3>
               <p className="text-xs text-secondary-500 dark:text-secondary-400">
                 تعرف علي كبار العلماء والصحاباء
+              </p>
+            </Link>
+            <Link to={ROUTES.SEERAH} className="text-center group">
+              <div className="inline-flex p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 mb-3 group-hover:scale-110 transition-transform">
+                <BookOpen className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+              </div>
+              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                السيرة النبوية
+              </h3>
+              <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                رحلة النبي ﷺ من المولد إلى الوفاة
               </p>
             </Link>
             <Link to={ROUTES.BOOKMARKS} className="text-center group">

@@ -41,7 +41,11 @@ const ResultPage = () => {
   }
 
   const handleRetry = () => {
-    navigate(`/quiz/${result.category}`, { replace: true });
+    if (result.category === 'search') {
+      navigate(ROUTES.SEARCH, { replace: true });
+    } else {
+      navigate(`/quiz/${result.category}`, { replace: true });
+    }
   };
 
   const handleReview = () => {

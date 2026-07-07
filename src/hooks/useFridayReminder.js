@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import useLocalStorage from './useLocalStorage';
 import { STORAGE_KEYS } from '../constants';
 

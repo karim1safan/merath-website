@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowRight, MapPin, Calendar, BookOpen } from 'lucide-react';
 import Markdown from 'react-markdown';
 import { usePersonality } from '../hooks/usePersonalities';
+import { ROUTES } from '../constants';
 import Badge from '../components/common/Badge';
 import Spinner from '../components/common/Spinner';
 import EmptyState from '../components/common/EmptyState';
@@ -27,7 +28,7 @@ const PersonalityDetailPage = () => {
         title="شخصية غير موجودة"
         description="الشخصية التي تبحث عنها غير موجودة"
         actionLabel="العودة للقائمة"
-        onAction={() => navigate('/personalities')}
+        onAction={() => navigate(ROUTES.PERSONALITIES)}
       />
     );
   }
@@ -35,7 +36,7 @@ const PersonalityDetailPage = () => {
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       <button
-        onClick={() => navigate('/personalities')}
+        onClick={() => navigate(ROUTES.PERSONALITIES)}
         className="inline-flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline"
       >
         <ArrowRight className="w-4 h-4" />

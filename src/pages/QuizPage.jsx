@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { AlertCircle } from 'lucide-react';
 import { CATEGORIES, ROUTES } from '../constants';
 import useQuiz from '../hooks/useQuiz';
@@ -14,13 +14,17 @@ import EmptyState from '../components/common/EmptyState';
 const QuizPage = () => {
   const { category } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchQuestions = location.state?.questions || null;
   const [timerDuration, setTimerDuration] = useState(0);
   const [showTimerSelect, setShowTimerSelect] = useState(true);
   const hasNavigatedRef = useRef(false);
 
-  const { questions, loading, error } = useQuizApi(category, 20);
+  const { questions, loading, error } = useQuizApi(category, 20, searchQuestions);
 
-  const categoryInfo = CATEGORIES.find((c) => c.id === category);
+  const categoryInfo = searchQuestions
+    ? { name: 'نتائج البحث', icon: null, color: 'bg-primary-100 dark:bg-primary-900/30' }
+    : CATEGORIES.find((c) => c.id === category);
 
   const {
     currentQuestion,
@@ -51,13 +55,13 @@ const QuizPage = () => {
         totalQuestions,
         percentage,
         timeSpent: timerDuration - timeLeft,
-        category,
+        category: searchQuestions ? 'search' : category,
         answers,
         questions: shuffledQuestions,
       },
       replace: true,
     });
-  }, [navigate, score, totalQuestions, percentage, timerDuration, timeLeft, category, answers, shuffledQuestions]);
+  }, [navigate, score, totalQuestions, percentage, timerDuration, timeLeft, category, answers, shuffledQuestions, searchQuestions]);
 
   useEffect(() => {
     if (completed) {
@@ -122,11 +126,13 @@ const QuizPage = () => {
     const IconComponent = categoryInfo.icon;
     return (
       <div className="max-w-md mx-auto text-center py-12">
-        <div className="flex justify-center mb-6">
-          <div className={`p-4 rounded-2xl ${categoryInfo.color}`}>
-            <IconComponent className="w-12 h-12" />
+        {IconComponent && (
+          <div className="flex justify-center mb-6">
+            <div className={`p-4 rounded-2xl ${categoryInfo.color}`}>
+              <IconComponent className="w-12 h-12" />
+            </div>
           </div>
-        </div>
+        )}
         <h1 className="text-3xl font-bold text-secondary-800 dark:text-secondary-200 mb-2">
           {categoryInfo.name}
         </h1>
@@ -138,11 +144,13 @@ const QuizPage = () => {
           <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-4">
             اختر مدة الاختبار
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-3" role="radiogroup" aria-label="مدة الاختبار">
             {[0, 300, 600, 1200].map((duration) => (
               <button
                 key={duration}
                 onClick={() => setTimerDuration(duration)}
+                role="radio"
+                aria-checked={timerDuration === duration}
                 className={`w-full p-3 rounded-xl border-2 transition-all duration-200 ${
                   timerDuration === duration
                     ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
@@ -194,11 +202,13 @@ const QuizPage = () => {
           السابق
         </Button>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-[50%] scrollbar-hide">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-[50%] scrollbar-hide" role="group" aria-label="التنقل بين الأسئلة">
           {Array.from({ length: totalQuestions }, (_, i) => (
             <button
               key={i}
               onClick={() => goToQuestion(i)}
+              aria-label={`السؤال ${i + 1}`}
+              aria-current={i === currentIndex ? 'true' : undefined}
               className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full flex-shrink-0 transition-colors duration-200 ${
                 i === currentIndex
                   ? 'bg-primary-600 dark:bg-primary-400'

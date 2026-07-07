@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, AlertCircle, Play } from 'lucide-react';
 import { searchQuestions } from '../services/quizApi';
 import { transformApiQuestions } from '../utils/transformQuestions';
-import { CATEGORIES } from '../constants';
+import { CATEGORIES, ROUTES } from '../constants';
 import Card from '../components/common/Card';
 import Button from '../components/common/Button';
 import Spinner from '../components/common/Spinner';
@@ -45,7 +45,7 @@ const SearchPage = () => {
 
   const startQuizWithResults = () => {
     if (results.length === 0) return;
-    navigate('/quiz/random', { state: { questions: results } });
+    navigate(ROUTES.QUIZ_SEARCH, { state: { questions: results } });
   };
 
   return (
@@ -68,6 +68,7 @@ const SearchPage = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="اكتب كلمة للبحث... مثال: الصلاة، الزكاة، القرآن"
+              aria-label="البحث في الأسئلة"
               className="w-full pr-12 pl-4 py-3 rounded-xl border-2 border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-800 dark:text-secondary-200 placeholder-secondary-400 focus:border-primary-500 focus:outline-none transition-colors duration-200"
             />
           </div>
