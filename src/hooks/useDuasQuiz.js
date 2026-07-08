@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { fetchDuaCategories, fetchDuaByCategory } from '../data/duas';
+import { fetchDhikrCategories, fetchDhikrByCategory } from '../services/dhikrApi';
 import { shuffleArray } from '../utils';
 
 const useDuasQuiz = (count = 10) => {
@@ -9,15 +9,15 @@ const useDuasQuiz = (count = 10) => {
 
   const fetchQuestions = useCallback(async () => {
     try {
-      const catData = await fetchDuaCategories();
+      const catData = await fetchDhikrCategories();
       const categories = catData.categories || [];
 
       const selectedCategories = shuffleArray(categories).slice(0, Math.min(count, categories.length));
 
       const duaPromises = selectedCategories.map((cat) =>
-        fetchDuaByCategory(cat.id).then((data) => ({
+        fetchDhikrByCategory(cat.number).then((data) => ({
           category: cat,
-          duas: data.duas || [],
+          items: data.items || [],
         }))
       );
 
@@ -26,32 +26,32 @@ const useDuasQuiz = (count = 10) => {
       const allQuestions = [];
       let qIndex = 0;
 
-      for (const { category, duas } of categoryDuas) {
-        if (duas.length === 0) continue;
+      for (const { category, items } of categoryDuas) {
+        if (items.length === 0) continue;
 
-        const dua = duas[Math.floor(Math.random() * duas.length)];
+        const dua = items[Math.floor(Math.random() * items.length)];
         const questionType = Math.random();
 
         if (questionType < 0.4) {
           const wrongCategories = categories
-            .filter((c) => c.id !== category.id)
-            .map((c) => c.name)
+            .filter((c) => c.number !== category.number)
+            .map((c) => c.nameAr)
             .slice(0, 3);
 
-          const options = shuffleArray([category.name, ...wrongCategories]);
+          const options = shuffleArray([category.nameAr, ...wrongCategories]);
 
           allQuestions.push({
             id: `duas-q-${qIndex}-category`,
-            question: `في أي مناسبة هذه الدعاء:\n"${dua.arabic?.substring(0, 100)}..."`,
+            question: `في أي مناسبة هذا الذكر:\n"${dua.arabic?.substring(0, 100)}..."`,
             options,
-            correctAnswer: options.indexOf(category.name),
-            explanation: `${dua.title} - المصدر: ${dua.source}`,
+            correctAnswer: options.indexOf(category.nameAr),
+            explanation: `${category.nameAr} - ${dua.source || ''}`,
             difficulty: 'easy',
             category: 'duas',
-            topic: 'أنواع الدعاء',
+            topic: 'أنواع الأذكار',
           });
         } else if (questionType < 0.7) {
-          const wrongDuas = duas
+          const wrongDuas = items
             .filter((d) => d.id !== dua.id)
             .map((d) => d.arabic?.substring(0, 60) || '')
             .filter(Boolean)
@@ -68,17 +68,17 @@ const useDuasQuiz = (count = 10) => {
 
           allQuestions.push({
             id: `duas-q-${qIndex}-identify`,
-            question: `ما هي أدعية ${category.name}؟`,
+            question: `ما هي أذكار ${category.nameAr}؟`,
             options,
             correctAnswer: options.indexOf(dua.arabic?.substring(0, 60) || ''),
-            explanation: `${dua.title} - المصدر: ${dua.source}`,
+            explanation: `${category.nameAr} - ${dua.source || ''}`,
             difficulty: 'medium',
             category: 'duas',
-            topic: 'تحديد الدعاء',
+            topic: 'تحديد الذكر',
           });
         } else {
-          const translation = dua.translation || '';
-          const wrongTranslations = duas
+          const translation = dua.translation?.substring(0, 60) || '';
+          const wrongTranslations = items
             .filter((d) => d.id !== dua.id)
             .map((d) => d.translation?.substring(0, 60) || '')
             .filter(Boolean)
@@ -89,19 +89,19 @@ const useDuasQuiz = (count = 10) => {
           }
 
           const options = shuffleArray([
-            translation.substring(0, 60),
+            translation,
             ...wrongTranslations.map((t) => t.substring(0, 60)),
           ]);
 
           allQuestions.push({
             id: `duas-q-${qIndex}-translation`,
-            question: `ما ترجمة هذه الدعاء:\n"${dua.arabic?.substring(0, 80)}..."`,
+            question: `ما ترجمة هذا الذكر:\n"${dua.arabic?.substring(0, 80)}..."`,
             options,
-            correctAnswer: options.indexOf(translation.substring(0, 60)),
-            explanation: `${dua.title} - المصدر: ${dua.source}`,
+            correctAnswer: options.indexOf(translation),
+            explanation: `${category.nameAr} - ${dua.source || ''}`,
             difficulty: 'hard',
             category: 'duas',
-            topic: 'ترجمة الدعاء',
+            topic: 'ترجمة الذكر',
           });
         }
 

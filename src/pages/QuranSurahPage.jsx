@@ -147,9 +147,6 @@ const QuranSurahPage = () => {
         <h1 className="text-3xl font-bold text-secondary-800 dark:text-secondary-200 mb-1">
           سورة {surah.name_arabic}
         </h1>
-        <p className="text-lg text-primary-600 dark:text-primary-400 mb-2">
-          {surah.name_english}
-        </p>
         <div className="flex items-center justify-center gap-4 text-sm text-secondary-500 dark:text-secondary-400 mb-6">
           <span>{surah.numberOfVerses} آية</span>
           <span>•</span>
@@ -258,10 +255,6 @@ const QuranSurahPage = () => {
 
             <p className="text-2xl leading-loose text-right text-secondary-800 dark:text-secondary-200 mb-4 font-arabic">
               {verse.arabic}
-            </p>
-
-            <p className="text-sm text-secondary-600 dark:text-secondary-400 leading-relaxed">
-              {verse.translations?.sahih_international}
             </p>
           </Card>
         ))}

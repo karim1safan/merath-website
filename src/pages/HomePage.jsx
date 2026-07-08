@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, BarChart3, CalendarCheck, Flame, Clock, Play, Users, Bookmark, Layers, X } from 'lucide-react';
+import { BookOpen, BarChart3, CalendarCheck, Flame, Clock, Play, Users, Bookmark, Layers, X, BookOpenText } from 'lucide-react';
 import { CATEGORIES, UMMMAH_CATEGORIES, ROUTES } from '../constants';
 import useDailyStreak from '../hooks/useDailyStreak';
 import useDailyVerse from '../hooks/useDailyVerse';
@@ -293,6 +293,17 @@ const HomePage = () => {
               </h3>
               <p className="text-xs text-secondary-500 dark:text-secondary-400">
                 رحلة النبي ﷺ من المولد إلى الوفاة
+              </p>
+            </Link>
+            <Link to={ROUTES.ADHKAR} className="text-center group">
+              <div className="inline-flex p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 mb-3 group-hover:scale-110 transition-transform">
+                <BookOpenText className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+              </div>
+              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                الأذكار
+              </h3>
+              <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                أذكار المسلم اليومية من القرآن والسنة
               </p>
             </Link>
             <Link to={ROUTES.BOOKMARKS} className="text-center group">
