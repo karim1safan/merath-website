@@ -1,4 +1,4 @@
-import { BookOpen, Shield, ScrollText, Scale, Languages, Moon, Star, Heart, BookOpenText } from 'lucide-react';
+import { BookOpen, Shield, ScrollText, Scale, Languages, Star, Heart, BookOpenText, Users, Crown, Landmark, Castle, Building, Clock } from 'lucide-react';
 
 export const ROUTES = {
   HOME: '/',
@@ -56,11 +56,53 @@ export const CATEGORIES = [
     color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
   },
   {
-    id: 'sira',
-    name: 'السيرة النبوية',
-    description: 'اختبارات حول حياة النبي ﷺ وسيرته',
-    icon: Moon,
+    id: 'sirah',
+    name: 'العهد النبوي',
+    description: 'اختبارات حول السيرة النبوية والغزوات',
+    icon: BookOpen,
     color: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
+  },
+  {
+    id: 'kholfa',
+    name: 'الخلفاء الراشدون',
+    description: 'اختبارات حول عصر الخلفاء الراشدين',
+    icon: Users,
+    color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  },
+  {
+    id: 'amwi',
+    name: 'العهد الأموي',
+    description: 'اختبارات حول العهد الأموي',
+    icon: Crown,
+    color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+  },
+  {
+    id: 'osmany',
+    name: 'العهد العثماني',
+    description: 'اختبارات حول العهد العثماني',
+    icon: Landmark,
+    color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+  },
+  {
+    id: 'mamalik',
+    name: 'عهد المماليك',
+    description: 'اختبارات حول عهد المماليك',
+    icon: Castle,
+    color: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
+  },
+  {
+    id: 'abasi',
+    name: 'العهد العباسي',
+    description: 'اختبارات حول العهد العباسي',
+    icon: Building,
+    color: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400',
+  },
+  {
+    id: 'moasir',
+    name: 'التاريخ المعاصر',
+    description: 'اختبارات حول التاريخ المعاصر',
+    icon: Clock,
+    color: 'bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400',
   },
   {
     id: 'arabia',

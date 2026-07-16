@@ -1,10 +1,22 @@
 import { useState, useEffect } from 'react';
 import {
   fetchRandomQuestions,
-  fetchQuestionsByCategory,
+  fetchMultiplePages,
+  fetchQuestionsByTopic,
   fetchCategories,
 } from '../services/quizApi';
 import { transformApiQuestions } from '../utils/transformQuestions';
+import { shuffleArray } from '../utils';
+
+const HISTORY_CATEGORIES = {
+  sirah: 'sirah',
+  kholfa: 'kholfa',
+  amwi: 'amwi',
+  osmany: 'osmany',
+  mamalik: 'mamalik',
+  abasi: 'abasi',
+  moasir: 'moasir',
+};
 
 let categoryMapCache = null;
 
@@ -16,8 +28,9 @@ async function getCategoryMap() {
   categories.forEach((cat) => {
     categoryMapCache[cat.englishName] = cat.id;
   });
-  // sira uses API category 5 (التاريخ — topic "العهد النبوي")
-  categoryMapCache.sira = 5;
+  Object.keys(HISTORY_CATEGORIES).forEach((key) => {
+    categoryMapCache[key] = 5;
+  });
   return categoryMapCache;
 }
 
@@ -42,9 +55,10 @@ function useQuizApi(category, count = 20, initialQuestions = null) {
           const categoryMap = await getCategoryMap();
           const categoryId = categoryMap[category];
 
-          if (categoryId) {
-            const result = await fetchQuestionsByCategory(categoryId, 1, count);
-            rawData = result.questions || [];
+          if (categoryId && HISTORY_CATEGORIES[category]) {
+            rawData = await fetchQuestionsByTopic(categoryId, HISTORY_CATEGORIES[category], count);
+          } else if (categoryId) {
+            rawData = await fetchMultiplePages(categoryId, 5, 50);
           } else {
             rawData = await fetchRandomQuestions(count);
           }
@@ -54,7 +68,8 @@ function useQuizApi(category, count = 20, initialQuestions = null) {
 
         if (!cancelled) {
           const transformed = transformApiQuestions(rawData);
-          setQuestions(transformed);
+          const shuffled = shuffleArray(transformed);
+          setQuestions(shuffled.slice(0, count));
         }
       } catch (err) {
         if (!cancelled) {

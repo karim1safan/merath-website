@@ -51,8 +51,8 @@ const Footer = () => {
             <span className="text-secondary-300 dark:text-secondary-600">|</span>
             <span className="text-sm font-bold text-primary-600 dark:text-primary-400">
               كريم سعفان
+              <span className="text-sm mr-1">❤️</span>
             </span>
-            <span className="text-sm">❤️</span>
           </div>
         </div>
       </div>
