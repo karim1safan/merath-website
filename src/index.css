@@ -31,7 +31,7 @@
   --color-danger: #ef4444;
   --color-warning: #f59e0b;
 
-  --font-cairo: 'Cairo', sans-serif;
+  --font-cairo: "Cairo", sans-serif;
 }
 
 @layer base {
@@ -111,3 +111,7 @@
 .dark {
   color-scheme: dark;
 }
+
+/* 
+
+*/

@@ -1,22 +1,32 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Search, Loader2 } from 'lucide-react';
 import { useQuranExplorer } from '../hooks/useQuranExplorer';
 import Card from '../components/common/Card';
 import EmptyState from '../components/common/EmptyState';
 
+const SORT_OPTIONS = [
+  { id: 'mushaf', label: 'ترتيب المصحف' },
+  { id: 'nuzul', label: 'ترتيب النزول' },
+];
+
 const QuranExplorerPage = () => {
   const { surahs, loading, error } = useQuranExplorer();
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortMode, setSortMode] = useState('mushaf');
 
-  const filteredSurahs = surahs.filter((surah) => {
-    if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
-    return (
-      surah.name.includes(q) ||
-      surah.id.toString() === q
-    );
-  });
+  const sortedAndFiltered = useMemo(() => {
+    const filtered = surahs.filter((surah) => {
+      if (!searchQuery) return true;
+      const q = searchQuery.toLowerCase();
+      return surah.name.includes(q) || surah.id.toString() === q;
+    });
+
+    if (sortMode === 'nuzul') {
+      return [...filtered].sort((a, b) => a.revelationOrder - b.revelationOrder);
+    }
+    return filtered;
+  }, [surahs, searchQuery, sortMode]);
 
   if (loading) {
     return (
@@ -52,8 +62,8 @@ const QuranExplorerPage = () => {
         </p>
       </div>
 
-      <div className="max-w-md mx-auto">
-        <div className="relative">
+      <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+        <div className="relative w-full max-w-md">
           <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary-400" />
           <input
             type="text"
@@ -64,14 +74,37 @@ const QuranExplorerPage = () => {
             className="w-full pr-12 pl-4 py-3 rounded-xl border-2 border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-800 dark:text-secondary-200 placeholder-secondary-400 focus:border-primary-500 focus:outline-none transition-colors"
           />
         </div>
+
+        <div className="flex gap-1 p-1 bg-secondary-100 dark:bg-secondary-800 rounded-xl shrink-0">
+          {SORT_OPTIONS.map((option) => (
+            <button
+              key={option.id}
+              onClick={() => setSortMode(option.id)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                sortMode === option.id
+                  ? 'bg-white dark:bg-secondary-700 text-primary-600 dark:text-primary-400 shadow-md'
+                  : 'text-secondary-600 dark:text-secondary-400 hover:text-secondary-800 dark:hover:text-secondary-200'
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {filteredSurahs.map((surah) => (
+        {sortedAndFiltered.map((surah) => (
           <Link key={surah.id} to={`/quran/${surah.id}`}>
             <Card hover className="text-center">
               <div className="text-sm text-secondary-500 dark:text-secondary-400 mb-1">
-                {surah.id}
+                {sortMode === 'nuzul' ? (
+                  <span className="inline-flex items-center gap-1">
+                    <span className="text-[10px] text-primary-500 dark:text-primary-400">نزول</span>
+                    {surah.revelationOrder}
+                  </span>
+                ) : (
+                  surah.id
+                )}
               </div>
               <h3 className="text-lg font-bold text-secondary-800 dark:text-secondary-200 mb-2">
                 {surah.name}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchQuranSurah } from '../services/quranTextApi';
+import { fetchQuranSurah, REVELATION_ORDER } from '../services/quranTextApi';
 import { fetchSuwar, fetchReciters, fetchTafasir } from '../services/quranAudioApi';
 
 const SURAH_LIST = Array.from({ length: 114 }, (_, i) => i + 1);
@@ -18,7 +18,11 @@ const useQuranExplorer = () => {
       try {
         const data = await fetchSuwar('ar');
         if (!cancelled) {
-          setSurahs(data);
+          const enriched = data.map((surah) => ({
+            ...surah,
+            revelationOrder: REVELATION_ORDER[surah.id] || 0,
+          }));
+          setSurahs(enriched);
         }
       } catch (err) {
         if (!cancelled) {

@@ -249,7 +249,7 @@ const AdhkarPage = () => {
             {selectedCategory.nameAr}
           </p>
           <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-2">
-            جزاك الله خيرا
+            مكتمل
           </p>
         </Modal>
       </div>

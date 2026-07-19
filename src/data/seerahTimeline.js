@@ -1,5 +1,5 @@
 const SEERAH_TIMELINE = [
-  // === العصر المكي ===
+  // العصر المكي
   {
     id: 1,
     title: 'مولد النبي ﷺ',
@@ -290,7 +290,7 @@ const SEERAH_TIMELINE = [
     category: 'migration',
     icon: '🌙',
   },
-  // === العصر المدني ===
+  // العصر المدني
   {
     id: 30,
     title: 'بناء مسجد قباء',
@@ -313,7 +313,7 @@ const SEERAH_TIMELINE = [
   },
   {
     id: 32,
-    title: 'ال_adhan',
+    title: 'الأذان',
     description: 'شُرّع الأذان وعُيّن بلال بن رباح مؤذناً للنبي ﷺ.',
     date: '1 هـ',
     dateGregorian: '622 م',

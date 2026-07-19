@@ -166,11 +166,7 @@ const HomePage = () => {
               <span className="text-sm text-secondary-500 dark:text-secondary-400">
                 {verse.surahName} - الآية {verse.ayahNumber}
               </span>
-              {verse.translation && (
-                <p className="text-xs text-secondary-400 dark:text-secondary-500 italic max-w-md text-left">
-                  "{verse.translation}"
-                </p>
-              )}
+
             </div>
           </Card>
         </section>

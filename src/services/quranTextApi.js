@@ -1,5 +1,20 @@
 const API_BASE = 'https://api.quran.gading.dev';
 
+const REVELATION_SEQUENCE = [
+  96, 74, 73, 111, 1, 114, 113, 112, 110, 109, 107, 106, 105, 104, 103,
+  92, 91, 93, 94, 95, 100, 101, 102, 75, 85, 60, 56, 22, 55, 54, 38, 24,
+  7, 4, 10, 51, 88, 18, 52, 69, 67, 64, 62, 48, 57, 13, 76, 44, 50, 43,
+  63, 37, 34, 31, 40, 42, 30, 29, 25, 35, 19, 16, 21, 23, 17, 11, 14, 15,
+  12, 28, 39, 26, 33, 8, 3, 2, 98, 66, 65, 59, 58, 49, 47, 36, 41, 45,
+  53, 80, 81, 82, 83, 90, 89, 86, 87, 84, 68, 77, 79, 78, 71, 6, 5, 46,
+  61, 32, 70, 97, 72, 20, 99, 27, 108, 9,
+];
+
+export const REVELATION_ORDER = {};
+REVELATION_SEQUENCE.forEach((surahNum, index) => {
+  REVELATION_ORDER[surahNum] = index + 1;
+});
+
 async function fetchFromQuranApi(endpoint) {
   const response = await fetch(`${API_BASE}${endpoint}`);
   if (!response.ok) {
