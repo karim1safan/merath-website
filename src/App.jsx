@@ -25,6 +25,7 @@ const SeerahPage = lazy(() => import('./pages/SeerahPage'));
 const BattlesPage = lazy(() => import('./pages/BattlesPage'));
 const BattleDetailPage = lazy(() => import('./pages/BattleDetailPage'));
 const AdhkarPage = lazy(() => import('./pages/AdhkarPage'));
+const PrayerTimesPage = lazy(() => import('./pages/PrayerTimesPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 const LoadingFallback = () => (
@@ -63,6 +64,7 @@ function App() {
                 <Route path="/seerah/battles" element={<BattlesPage />} />
                 <Route path="/seerah/battles/:id" element={<BattleDetailPage />} />
                 <Route path="/adhikr" element={<AdhkarPage />} />
+                <Route path="/prayer" element={<PrayerTimesPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Suspense>

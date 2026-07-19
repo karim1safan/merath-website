@@ -24,6 +24,7 @@ export const ROUTES = {
   SEERAH_BATTLES: '/seerah/battles',
   SEERAH_BATTLE_DETAIL: '/seerah/battles/:id',
   ADHKAR: '/adhikr',
+  PRAYER: '/prayer',
 };
 
 export const CATEGORIES = [
