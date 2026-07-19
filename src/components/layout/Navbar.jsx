@@ -4,6 +4,7 @@ import { Moon, Sun, Bookmark, CalendarCheck, Users, BookOpen, Home, LayoutGrid, 
 import { useTheme } from '../../hooks/useTheme';
 import useBookmarks from '../../hooks/useBookmarks';
 import { ROUTES } from '../../constants';
+import CinematicThemeToggle from '../common/CinematicThemeToggle';
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -81,18 +82,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Theme toggle */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-secondary-100 dark:bg-secondary-700 hover:bg-secondary-200 dark:hover:bg-secondary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
-              aria-label={theme === 'light' ? 'الوضع الداكن' : 'الوضع الفاتح'}
-            >
-              {theme === 'light' ? (
-                <Moon className="w-5 h-5 text-secondary-600" />
-              ) : (
-                <Sun className="w-5 h-5 text-yellow-400" />
-              )}
-            </button>
+            <CinematicThemeToggle />
 
             {/* Mobile hamburger */}
             <button
