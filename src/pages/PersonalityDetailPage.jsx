@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowRight, MapPin, Calendar, BookOpen } from 'lucide-react';
+import { ArrowRight, MapPin, Calendar, BookOpenText, Play } from 'lucide-react';
 import Markdown from 'react-markdown';
 import { usePersonality } from '../hooks/usePersonalities';
 import { ROUTES } from '../constants';
@@ -24,9 +24,9 @@ const PersonalityDetailPage = () => {
   if (error || !personality) {
     return (
       <EmptyState
-        icon={<BookOpen className="w-16 h-16" />}
-        title="شخصية غير موجودة"
-        description="الشخصية التي تبحث عنها غير موجودة"
+        icon={<BookOpenText className="w-16 h-16" />}
+        title="مقال غير موجود"
+        description="المقال الذي تبحث عنه غير موجود"
         actionLabel="العودة للقائمة"
         onAction={() => navigate(ROUTES.PERSONALITIES)}
       />
@@ -34,7 +34,7 @@ const PersonalityDetailPage = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8">
+    <div className="max-w-5xl mx-auto space-y-8">
       <button
         onClick={() => navigate(ROUTES.PERSONALITIES)}
         className="inline-flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline"
@@ -52,14 +52,18 @@ const PersonalityDetailPage = () => {
           {personality.title}
         </p>
         <div className="flex items-center justify-center gap-4 flex-wrap text-sm text-secondary-500 dark:text-secondary-400">
-          <span className="flex items-center gap-1.5">
-            <Calendar className="w-4 h-4" />
-            {personality.era}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <MapPin className="w-4 h-4" />
-            {personality.birth} - {personality.death}
-          </span>
+          {personality.era && (
+            <span className="flex items-center gap-1.5">
+              <Calendar className="w-4 h-4" />
+              {personality.era}
+            </span>
+          )}
+          {(personality.birth || personality.death) && (
+            <span className="flex items-center gap-1.5">
+              <MapPin className="w-4 h-4" />
+              {personality.birth}{personality.birth && personality.death ? ' - ' : ''}{personality.death}
+            </span>
+          )}
         </div>
         <div className="flex justify-center gap-2 mt-4">
           {personality.tags.map((tag) => (
@@ -106,6 +110,36 @@ const PersonalityDetailPage = () => {
                 {children}
               </blockquote>
             ),
+            a: ({ href, children }) => {
+              const isYouTube = href && (href.includes('youtube.com') || href.includes('youtu.be'));
+              if (isYouTube) {
+                return (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors duration-200 no-underline my-4"
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-600 flex items-center justify-center">
+                      <Play className="w-5 h-5 text-white fill-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-sm font-semibold text-red-700 dark:text-red-400 block">
+                        شاهد الفيديو
+                      </span>
+                      <span className="text-xs text-red-500 dark:text-red-500 truncate block">
+                        {children}
+                      </span>
+                    </div>
+                  </a>
+                );
+              }
+              return (
+                <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary-600 dark:text-primary-400 hover:underline">
+                  {children}
+                </a>
+              );
+            },
           }}
         >
           {content}

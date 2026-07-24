@@ -53,7 +53,6 @@ const useDailyVerse = () => {
             surahName,
             ayahNumber: data.verse_key?.split(':')[1] || '',
             verseKey: data.verse_key || '',
-            audio: data.audio?.ayah_audio || '',
           };
 
           // Only cache if verse has valid content
