@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Search, X } from 'lucide-react';
+import { BookOpenText, Search, X } from 'lucide-react';
 import { usePersonalities } from '../hooks/usePersonalities';
 import Card from '../components/common/Card';
 import Badge from '../components/common/Badge';
-import Spinner from '../components/common/Spinner';
 import EmptyState from '../components/common/EmptyState';
+import PersonalitiesSkeleton from '../components/skeletons/PersonalitiesSkeleton';
 
 const PersonalitiesPage = () => {
   const { personalities, loading } = usePersonalities();
@@ -46,11 +46,7 @@ const PersonalitiesPage = () => {
   }, [personalities, searchQuery, selectedTags]);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Spinner size="lg" />
-      </div>
-    );
+    return <PersonalitiesSkeleton />;
   }
 
   return (
@@ -58,14 +54,14 @@ const PersonalitiesPage = () => {
       <div className="text-center">
         <div className="flex justify-center mb-4">
           <div className="p-3 rounded-2xl bg-primary-100 dark:bg-primary-900/30">
-            <Users className="w-10 h-10 text-primary-600 dark:text-primary-400" />
+            <BookOpenText className="w-10 h-10 text-primary-600 dark:text-primary-400" />
           </div>
         </div>
         <h1 className="text-3xl font-bold text-secondary-800 dark:text-secondary-200 mb-2">
-          شخصيات إسلامية
+          مقالات إسلامية
         </h1>
         <p className="text-secondary-600 dark:text-secondary-400 max-w-lg mx-auto">
-          تعرّف على أبرز العلماء والفلاسفة والمفكرين الذين أثروا الحضارة الإسلامية
+          مقالات متنوعة في العلوم الإسلامية والسيرة النبوية والحديث
         </p>
       </div>
 
@@ -76,8 +72,8 @@ const PersonalitiesPage = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="ابحث عن شخصية..."
-            aria-label="البحث عن شخصية"
+            placeholder="ابحث عن مقال..."
+            aria-label="البحث عن مقال"
             className="w-full pr-12 pl-10 py-3 rounded-xl border-2 border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-800 dark:text-secondary-200 placeholder-secondary-400 dark:placeholder-secondary-500 focus:border-primary-500 dark:focus:border-primary-400 focus:outline-none transition-colors duration-200"
           />
           {searchQuery && (
@@ -127,7 +123,7 @@ const PersonalitiesPage = () => {
         <EmptyState
           icon={<Search className="w-16 h-16" />}
           title="لا توجد نتائج"
-          description="لم يتم العثور على شخصيات تطابق البحث"
+          description="لم يتم العثور على مقالات تطابق البحث"
           actionLabel="مسح الفلاتر"
           onAction={resetFilters}
         />

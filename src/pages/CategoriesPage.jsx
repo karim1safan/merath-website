@@ -4,63 +4,64 @@ import Card from '../components/common/Card';
 
 const CategoriesPage = () => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="text-center">
         <h1 className="text-3xl font-bold text-secondary-800 dark:text-secondary-200 mb-2">
-          اختار القسم
+          اختبارات
         </h1>
         <p className="text-secondary-600 dark:text-secondary-400">
-          اختر القسم الذي تريد اختبار معلوماتك فيه
+          اختبر معلوماتك في القرآن الكريم والحديث النبوي والعلوم الإسلامية
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {CATEGORIES.map((category) => {
-          const IconComponent = category.icon;
-          return (
-            <Link key={category.id} to={`/quiz/${category.id}`}>
-              <Card hover className="h-full">
-                <div className="flex items-start gap-4">
-                  <div className={`p-3 rounded-xl ${category.color}`}>
-                    <IconComponent className="w-8 h-8" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                      {category.name}
-                    </h3>
-                    <p className="text-sm text-secondary-500 dark:text-secondary-400">
-                      {category.description}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </Link>
-          );
-        })}
-      </div>
-
       <div>
-        <h2 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200 mb-6">
+        <h2 className="text-xl font-bold text-secondary-800 dark:text-secondary-200 mb-4">
           اختبارات القرآن والحديث
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {UMMMAH_CATEGORIES.map((category) => {
             const IconComponent = category.icon;
             return (
               <Link key={category.id} to={`/quiz/${category.id}`}>
                 <Card hover className="h-full">
-                  <div className="flex items-start gap-4">
-                    <div className={`p-3 rounded-xl ${category.color}`}>
-                      <IconComponent className="w-8 h-8" />
+                  <div className="text-center">
+                    <div className={`inline-flex p-3 rounded-xl mb-3 ${category.color}`}>
+                      <IconComponent className="w-7 h-7" />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                        {category.name}
-                      </h3>
-                      <p className="text-sm text-secondary-500 dark:text-secondary-400">
-                        {category.description}
-                      </p>
+                    <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                      {category.name}
+                    </h3>
+                    <p className="text-secondary-500 dark:text-secondary-400 text-xs">
+                      {category.description}
+                    </p>
+                  </div>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-xl font-bold text-secondary-800 dark:text-secondary-200 mb-4">
+          اختبارات متنوعة
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {CATEGORIES.map((category) => {
+            const IconComponent = category.icon;
+            return (
+              <Link key={category.id} to={`/quiz/${category.id}`}>
+                <Card hover className="h-full">
+                  <div className="text-center">
+                    <div className={`inline-flex p-3 rounded-xl mb-3 ${category.color}`}>
+                      <IconComponent className="w-7 h-7" />
                     </div>
+                    <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                      {category.name}
+                    </h3>
+                    <p className="text-secondary-500 dark:text-secondary-400 text-xs">
+                      {category.description}
+                    </p>
                   </div>
                 </Card>
               </Link>

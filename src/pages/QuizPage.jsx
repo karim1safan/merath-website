@@ -8,8 +8,8 @@ import QuestionCard from '../components/quiz/QuestionCard';
 import ProgressBar from '../components/quiz/ProgressBar';
 import Timer from '../components/quiz/Timer';
 import Button from '../components/common/Button';
-import Spinner from '../components/common/Spinner';
 import EmptyState from '../components/common/EmptyState';
+import QuizSkeleton from '../components/skeletons/QuizSkeleton';
 
 const QuizPage = () => {
   const { category } = useParams();
@@ -91,11 +91,7 @@ const QuizPage = () => {
   }
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Spinner size="lg" />
-      </div>
-    );
+    return <QuizSkeleton />;
   }
 
   if (error) {

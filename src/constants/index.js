@@ -9,7 +9,6 @@ export const ROUTES = {
   REVIEW: '/review',
   STATISTICS: '/statistics',
   BOOKMARKS: '/bookmarks',
-  DAILY: '/daily',
   PERSONALITIES: '/personalities',
   PERSONALITY: '/personalities/:id',
   QURAN_QUIZ: '/quiz/quran',
@@ -24,6 +23,8 @@ export const ROUTES = {
   SEERAH_BATTLES: '/seerah/battles',
   SEERAH_BATTLE_DETAIL: '/seerah/battles/:id',
   ADHKAR: '/adhikr',
+  MORNING_EVENING_ADHKAR: '/adhikr/morning-evening',
+  COURSES: '/courses',
 };
 
 export const CATEGORIES = [
@@ -151,6 +152,10 @@ export const UMMMAH_CATEGORIES = [
   },
 ];
 
+export const QURAN = {
+  TOTAL_SURAHS: 114,
+};
+
 export const DIFFICULTY_LEVELS = {
   easy: { label: 'سهل', color: 'text-success' },
   medium: { label: 'متوسط', color: 'text-warning' },
@@ -171,4 +176,9 @@ export const STORAGE_KEYS = {
   BOOKMARKS: 'quiz-bookmarks',
   DAILY_STREAK: 'quiz-daily-streak',
   FRIDAY_REMINDER: 'quiz-friday-reminder',
+  PRAYER_CITY: 'quiz-prayer-city',
 };
+
+export const PRAYER_CITIES = [
+  { id: 'cairo', name: 'القاهرة', country: 'مصر', lat: 30.0444, lng: 31.2357 },
+];

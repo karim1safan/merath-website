@@ -1,46 +1,60 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { BookOpen, BarChart3, CalendarCheck, Flame, Clock, Play, Users, Bookmark, Layers, X, BookOpenText } from 'lucide-react';
-import { CATEGORIES, UMMMAH_CATEGORIES, ROUTES } from '../constants';
-import useDailyStreak from '../hooks/useDailyStreak';
-import useDailyVerse from '../hooks/useDailyVerse';
-import useFridayReminder from '../hooks/useFridayReminder';
-import Card from '../components/common/Card';
-import Button from '../components/common/Button';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import {
+  BookOpen,
+  BarChart3,
+  Clock,
+  Users,
+  Bookmark,
+  Layers,
+  X,
+  PlayCircle,
+  ExternalLink,
+} from "lucide-react";
+import { ROUTES } from "../constants";
+import { PLAYLISTS } from "../data/playlists";
+import useIslamicQuote from "../hooks/useIslamicQuote";
+import useFridayReminder from "../hooks/useFridayReminder";
+import usePrayerTimes, { getNextPrayerIndex } from "../hooks/usePrayerTimes";
+import Card from "../components/common/Card";
+import Button from "../components/common/Button";
+import Skeleton from "../components/common/Skeleton";
+import PrayerTimesCard from "../components/prayer/PrayerTimesCard";
+import PrayerTimesSkeleton from "../components/skeletons/PrayerTimesSkeleton";
 
 const HomePage = () => {
-  const { currentStreak, todayCompleted } = useDailyStreak();
-  const { verse } = useDailyVerse();
+  const { quote, loading: quoteLoading } = useIslamicQuote();
   const { showBanner, dismiss } = useFridayReminder();
+  const {
+    timings,
+    loading: prayerLoading,
+    currentCity,
+    setCity,
+    prayerKeys,
+  } = usePrayerTimes();
+  const nextPrayerIndex = timings ? getNextPrayerIndex(timings) : -1;
 
   const [now, setNow] = useState(new Date());
-  const [verseAudio, setVerseAudio] = useState(null);
 
   useEffect(() => {
     const interval = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  const handlePlayVerse = () => {
-    if (!verse?.audio) return;
-    if (verseAudio) {
-      verseAudio.pause();
-      setVerseAudio(null);
-      return;
-    }
-    const audio = new Audio(verse.audio);
-    audio.play().catch((error) => {
-      console.error('Error playing audio:', error);
-    });
-    audio.onended = () => setVerseAudio(null);
-    setVerseAudio(audio);
+  const dateOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   };
-
-  const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-  const arabicDate = now.toLocaleDateString('ar-SA', dateOptions);
-  const arabicTime = now.toLocaleTimeString('ar-SA', timeOptions);
-  const hijriDate = now.toLocaleDateString('ar-SA-u-ca-islamic', { year: 'numeric', month: 'long', day: 'numeric' });
+  const timeOptions = { hour: "2-digit", minute: "2-digit" };
+  const arabicDate = now.toLocaleDateString("ar-SA", dateOptions);
+  const arabicTime = now.toLocaleTimeString("ar-SA", timeOptions);
+  const hijriDate = now.toLocaleDateString("ar-SA-u-ca-islamic", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <div className="space-y-12">
@@ -62,7 +76,8 @@ const HomePage = () => {
                 تذكير: قراءة سورة الكهف
               </h3>
               <p className="text-sm text-emerald-100 mb-3">
-                اليوم الجمعة، اقرأ سورة الكهف لتنال أجرها — قال ﷺ: "من قرأ سورة الكهف يوم الجمعة أضاء له من النور ما بين الجمعتين"
+                اليوم الجمعة، اقرأ سورة الكهف لتنال أجرها — قال ﷺ: "من قرأ سورة
+                الكهف يوم الجمعة أضاء له من النور ما بين الجمعتين"
               </p>
               <Link
                 to="/quran/18"
@@ -89,13 +104,24 @@ const HomePage = () => {
         <div className="inline-flex flex-col items-center gap-3 px-6 py-4 rounded-2xl bg-secondary-50 dark:bg-secondary-800/50 border border-secondary-200 dark:border-secondary-700 mb-8">
           <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400">
             <Clock className="w-5 h-5" />
-            <span className="text-2xl sm:text-3xl font-bold font-mono" dir="ltr">{arabicTime}</span>
+            <span
+              className="text-2xl sm:text-3xl font-bold font-cairo"
+              dir="ltr"
+            >
+              {arabicTime}
+            </span>
           </div>
           <div className="h-px w-full bg-secondary-200 dark:bg-secondary-700" />
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-            <span className="text-lg font-semibold text-secondary-800 dark:text-secondary-200">{hijriDate}</span>
-            <span className="hidden sm:inline text-secondary-300 dark:text-secondary-600">|</span>
-            <span className="text-base text-secondary-500 dark:text-secondary-400">{arabicDate}</span>
+            <span className="text-lg font-semibold text-secondary-800 dark:text-secondary-200">
+              {hijriDate}
+            </span>
+            <span className="hidden sm:inline text-secondary-300 dark:text-secondary-600">
+              |
+            </span>
+            <span className="text-base text-secondary-500 dark:text-secondary-400">
+              {arabicDate}
+            </span>
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -103,138 +129,128 @@ const HomePage = () => {
             <Button size="lg">ابدأ الاختبار</Button>
           </Link>
           <Link to={ROUTES.STATISTICS}>
-            <Button variant="outline" size="lg">الإحصائيات</Button>
+            <Button variant="outline" size="lg">
+              الإحصائيات
+            </Button>
           </Link>
         </div>
       </section>
 
+      {prayerLoading ? (
+        <PrayerTimesSkeleton />
+      ) : timings && (
+        <PrayerTimesCard
+          timings={timings}
+          nextPrayerIndex={nextPrayerIndex}
+          currentCity={currentCity}
+          loading={prayerLoading}
+          prayerKeys={prayerKeys}
+        />
+      )}
+
+      {quoteLoading ? (
+        <section>
+          <div className="bg-white dark:bg-secondary-800 rounded-2xl shadow-lg p-6 relative overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/40 border border-primary-200 dark:border-primary-800">
+            <div className="flex items-center justify-between mb-4">
+              <Skeleton variant="text" className="w-24 h-6" />
+              <Skeleton
+                variant="rectangular"
+                className="w-10 h-10 rounded-xl"
+              />
+            </div>
+            <Skeleton variant="text" className="w-full h-5 mb-2" />
+            <Skeleton variant="text" className="w-full h-5 mb-2" />
+            <Skeleton variant="text" className="w-3/4 h-5 mb-4" />
+            <Skeleton variant="text" className="w-32 h-4" />
+          </div>
+        </section>
+      ) : (
+        quote && (
+          <section>
+            <Card className="relative overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/40 border-primary-200 dark:border-primary-800 font-amiri font-bold">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl text-secondary-800 dark:text-secondary-200">
+                  اقتباس اليوم
+                </h3>
+              </div>
+              <p className="text-2xl leading-loose text-right text-secondary-800 dark:text-secondary-200 mb-4 text-3xl">
+                {quote.arabic}
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-[14px] text-secondary-500 dark:text-secondary-400">
+                  {quote.author}
+                </span>
+              </div>
+            </Card>
+          </section>
+        )
+      )}
+
       <section>
-        <Link to={ROUTES.DAILY}>
-          <Card hover className="relative overflow-hidden">
+        <Link to={ROUTES.CATEGORIES}>
+          <Card
+            hover
+            className="relative overflow-hidden bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-900/40 border-emerald-200 dark:border-emerald-800"
+          >
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-primary-100 dark:bg-primary-900/30">
-                <CalendarCheck className="w-8 h-8 text-primary-600 dark:text-primary-400" />
+              <div className="p-3 rounded-xl bg-emerald-200 dark:bg-emerald-800/50">
+                <Layers className="w-8 h-8 text-emerald-700 dark:text-emerald-300" />
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-bold text-secondary-800 dark:text-secondary-200">
-                  التحدي اليومي
+                  اختبارات القرآن والحديث
                 </h3>
                 <p className="text-sm text-secondary-500 dark:text-secondary-400">
-                  10 أسئلة متنوعة كل يوم - اختبر معلوماتك
+                  اختبر معلوماتك في القرآن الكريم والأحاديث النبوية
                 </p>
               </div>
-              {currentStreak > 0 && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-orange-900/30">
-                  <Flame className="w-4 h-4 text-orange-500" />
-                  <span className="text-sm font-bold text-orange-600 dark:text-orange-400">
-                    {currentStreak}
-                  </span>
-                </div>
-              )}
             </div>
-            {todayCompleted && (
-              <div className="absolute top-3 left-3">
-                <span className="text-xs font-semibold text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
-                  مكتمل ✓
-                </span>
-              </div>
-            )}
           </Card>
         </Link>
       </section>
 
-      {verse && (
-        <section>
-          <Card className="relative overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/40 border-primary-200 dark:border-primary-800">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-secondary-800 dark:text-secondary-200">
-                آية اليوم
-              </h3>
-              {verse.audio && (
-                <button
-                  onClick={handlePlayVerse}
-                  className="p-2 rounded-xl bg-primary-100 dark:bg-primary-900/30 hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors"
-                >
-                  <Play className="w-4 h-4 text-primary-600 dark:text-primary-400" />
-                </button>
-              )}
-            </div>
-            <p className="text-xl leading-loose text-right text-secondary-800 dark:text-secondary-200 mb-4 font-arabic">
-              {verse.arabic}
-            </p>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-secondary-500 dark:text-secondary-400">
-                {verse.surahName} - الآية {verse.ayahNumber}
-              </span>
-
-            </div>
-          </Card>
-        </section>
-      )}
-
       <section>
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200">
-            اختبر معلوماتك
+            دورات وقنوات إسلامية
           </h2>
           <Link
-            to={ROUTES.CATEGORIES}
+            to={ROUTES.COURSES}
             className="text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium"
           >
             عرض الكل
           </Link>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {CATEGORIES.map((category) => {
-            const IconComponent = category.icon;
-            return (
-              <Link key={category.id} to={`/quiz/${category.id}`}>
-                <Card hover className="h-full">
-                  <div className="text-center">
-                    <div className={`inline-flex p-3 rounded-xl mb-3 ${category.color}`}>
-                      <IconComponent className="w-7 h-7" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                      {category.name}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {PLAYLISTS.slice(0, 3).map((playlist) => (
+            <a
+              key={playlist.id}
+              href={playlist.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <Card hover className="h-full">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-xl bg-red-100 dark:bg-red-900/30 flex-shrink-0">
+                    <PlayCircle className="w-7 h-7 text-red-600 dark:text-red-400" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-1 truncate">
+                      {playlist.title}
                     </h3>
-                    <p className="text-secondary-500 dark:text-secondary-400 text-xs">
-                      {category.description}
+                    <p className="text-secondary-500 dark:text-secondary-400 text-xs mb-1">
+                      {playlist.channelName} · {playlist.videoCount} فيديو
+                    </p>
+                    <p className="text-secondary-500 dark:text-secondary-400 text-xs line-clamp-2">
+                      {playlist.description}
                     </p>
                   </div>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      <section>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200">
-            اختبارات القرآن والحديث
-          </h2>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {UMMMAH_CATEGORIES.map((category) => {
-            const IconComponent = category.icon;
-            return (
-              <Link key={category.id} to={`/quiz/${category.id}`}>
-                <Card hover className="h-full">
-                  <div className="text-center">
-                    <div className={`inline-flex p-3 rounded-xl mb-3 ${category.color}`}>
-                      <IconComponent className="w-7 h-7" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                      {category.name}
-                    </h3>
-                    <p className="text-secondary-500 dark:text-secondary-400 text-xs">
-                      {category.description}
-                    </p>
-                  </div>
-                </Card>
-              </Link>
-            );
-          })}
+                  <ExternalLink className="w-4 h-4 text-secondary-400 flex-shrink-0 mt-1" />
+                </div>
+              </Card>
+            </a>
+          ))}
         </div>
       </section>
 
@@ -247,17 +263,6 @@ const HomePage = () => {
             تجربة تعليمية متكاملة تجمع بين الاختبارات والمراجعة والاستكشاف
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            <Link to={ROUTES.DAILY} className="text-center group">
-              <div className="inline-flex p-3 rounded-xl bg-orange-100 dark:bg-orange-900/30 mb-3 group-hover:scale-110 transition-transform">
-                <CalendarCheck className="w-6 h-6 text-orange-600 dark:text-orange-400" />
-              </div>
-              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                التحدي اليومي
-              </h3>
-              <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                10 أسئلة متنوعة كل يوم مع تتبع السيري
-              </p>
-            </Link>
             <Link to={ROUTES.QURAN_EXPLORER} className="text-center group">
               <div className="inline-flex p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 mb-3 group-hover:scale-110 transition-transform">
                 <BookOpen className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
@@ -274,7 +279,7 @@ const HomePage = () => {
                 <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
               </div>
               <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                الشخصيات الإسلامية
+                المقالات الإسلامية
               </h3>
               <p className="text-xs text-secondary-500 dark:text-secondary-400">
                 تعرف علي كبار العلماء والصحاباء
@@ -291,17 +296,7 @@ const HomePage = () => {
                 رحلة النبي ﷺ من المولد إلى الوفاة
               </p>
             </Link>
-            <Link to={ROUTES.ADHKAR} className="text-center group">
-              <div className="inline-flex p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 mb-3 group-hover:scale-110 transition-transform">
-                <BookOpenText className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                الأذكار
-              </h3>
-              <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                أذكار المسلم اليومية من القرآن والسنة
-              </p>
-            </Link>
+
             <Link to={ROUTES.BOOKMARKS} className="text-center group">
               <div className="inline-flex p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 mb-3 group-hover:scale-110 transition-transform">
                 <Bookmark className="w-6 h-6 text-purple-600 dark:text-purple-400" />
