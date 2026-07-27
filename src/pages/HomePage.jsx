@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   BookOpen,
-  BarChart3,
   Clock,
   Users,
   Bookmark,
@@ -11,7 +10,7 @@ import {
   PlayCircle,
   ExternalLink,
 } from "lucide-react";
-import { ROUTES } from "../constants";
+import { ROUTES, CATEGORIES } from "../constants";
 import { PLAYLISTS } from "../data/playlists";
 import useIslamicQuote from "../hooks/useIslamicQuote";
 import useFridayReminder from "../hooks/useFridayReminder";
@@ -21,6 +20,7 @@ import Button from "../components/common/Button";
 import Skeleton from "../components/common/Skeleton";
 import PrayerTimesCard from "../components/prayer/PrayerTimesCard";
 import PrayerTimesSkeleton from "../components/skeletons/PrayerTimesSkeleton";
+import { FadeIn, StaggerChildren, StaggerItem } from "../components/ui/Motion";
 
 const HomePage = () => {
   const { quote, loading: quoteLoading } = useIslamicQuote();
@@ -59,7 +59,8 @@ const HomePage = () => {
   return (
     <div className="space-y-12">
       {showBanner && (
-        <section className="bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl p-6 text-white relative">
+        <FadeIn>
+          <section className="bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl p-6 text-white relative">
           <button
             onClick={dismiss}
             className="absolute top-4 left-4 p-1 rounded-lg hover:bg-white/20 transition-colors"
@@ -88,10 +89,12 @@ const HomePage = () => {
               </Link>
             </div>
           </div>
-        </section>
+          </section>
+        </FadeIn>
       )}
 
-      <section className="text-center py-12">
+      <FadeIn delay={0.1}>
+        <section className="text-center py-12">
         <div className="flex justify-center mb-6">
           <img src="/icon.png" alt="ميراث" className="w-20 h-20 rounded-2xl" />
         </div>
@@ -128,13 +131,9 @@ const HomePage = () => {
           <Link to={ROUTES.CATEGORIES}>
             <Button size="lg">ابدأ الاختبار</Button>
           </Link>
-          <Link to={ROUTES.STATISTICS}>
-            <Button variant="outline" size="lg">
-              الإحصائيات
-            </Button>
-          </Link>
         </div>
       </section>
+      </FadeIn>
 
       {prayerLoading ? (
         <PrayerTimesSkeleton />
@@ -166,50 +165,62 @@ const HomePage = () => {
         </section>
       ) : (
         quote && (
-          <section>
-            <Card className="relative overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/40 border-primary-200 dark:border-primary-800 font-amiri font-bold">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl text-secondary-800 dark:text-secondary-200">
-                  اقتباس اليوم
-                </h3>
-              </div>
-              <p className="text-2xl leading-loose text-right text-secondary-800 dark:text-secondary-200 mb-4 text-3xl">
-                {quote.arabic}
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-[14px] text-secondary-500 dark:text-secondary-400">
-                  {quote.author}
-                </span>
-              </div>
-            </Card>
-          </section>
+          <FadeIn delay={0.15}>
+            <section>
+              <Card className="relative overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/40 border-primary-200 dark:border-primary-800 font-amiri font-bold">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl text-secondary-800 dark:text-secondary-200">
+                    اقتباس اليوم
+                  </h3>
+                </div>
+                <p className="text-2xl leading-loose text-right text-secondary-800 dark:text-secondary-200 mb-4 text-3xl">
+                  {quote.arabic}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-[14px] text-secondary-500 dark:text-secondary-400">
+                    {quote.author}
+                  </span>
+                </div>
+              </Card>
+            </section>
+          </FadeIn>
         )
       )}
 
-      <section>
-        <Link to={ROUTES.CATEGORIES}>
-          <Card
-            hover
-            className="relative overflow-hidden bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-900/40 border-emerald-200 dark:border-emerald-800"
-          >
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-emerald-200 dark:bg-emerald-800/50">
-                <Layers className="w-8 h-8 text-emerald-700 dark:text-emerald-300" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-secondary-800 dark:text-secondary-200">
-                  اختبارات القرآن والحديث
-                </h3>
-                <p className="text-sm text-secondary-500 dark:text-secondary-400">
-                  اختبر معلوماتك في القرآن الكريم والأحاديث النبوية
-                </p>
-              </div>
-            </div>
-          </Card>
-        </Link>
-      </section>
+      <FadeIn delay={0.2}>
+        <section>
+          <h2 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200 mb-6">
+            اختبارات متنوعة
+          </h2>
+          <StaggerChildren stagger={0.04} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {CATEGORIES.map((category) => {
+              const IconComponent = category.icon;
+              return (
+                <StaggerItem key={category.id}>
+                  <Link to={`/quiz/${category.id}/topics`}>
+                    <Card hover className="h-full">
+                      <div className="text-center">
+                        <div className={`inline-flex p-3 rounded-xl mb-3 ${category.color}`}>
+                          <IconComponent className="w-7 h-7" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                          {category.name}
+                        </h3>
+                        <p className="text-secondary-500 dark:text-secondary-400 text-xs">
+                          {category.description}
+                        </p>
+                      </div>
+                    </Card>
+                  </Link>
+                </StaggerItem>
+              );
+            })}
+          </StaggerChildren>
+        </section>
+      </FadeIn>
 
-      <section>
+      <FadeIn delay={0.25}>
+        <section>
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200">
             دورات وقنوات إسلامية
@@ -253,86 +264,87 @@ const HomePage = () => {
           ))}
         </div>
       </section>
+      </FadeIn>
 
-      <section className="bg-primary-50 dark:bg-primary-900/20 rounded-2xl p-8">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200 mb-4">
-            لماذا ميراث؟
-          </h2>
-          <p className="text-secondary-500 dark:text-secondary-400 mb-8 max-w-xl mx-auto">
-            تجربة تعليمية متكاملة تجمع بين الاختبارات والمراجعة والاستكشاف
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            <Link to={ROUTES.QURAN_EXPLORER} className="text-center group">
-              <div className="inline-flex p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 mb-3 group-hover:scale-110 transition-transform">
-                <BookOpen className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                استكشاف القرآن
-              </h3>
-              <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                تصفح سور القرآن الكريم واستمع التلاوة
-              </p>
-            </Link>
-            <Link to={ROUTES.PERSONALITIES} className="text-center group">
-              <div className="inline-flex p-3 rounded-xl bg-blue-100 dark:bg-blue-900/30 mb-3 group-hover:scale-110 transition-transform">
-                <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-              </div>
-              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                المقالات الإسلامية
-              </h3>
-              <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                تعرف علي كبار العلماء والصحاباء
-              </p>
-            </Link>
-            <Link to={ROUTES.SEERAH} className="text-center group">
-              <div className="inline-flex p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 mb-3 group-hover:scale-110 transition-transform">
-                <BookOpen className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-              </div>
-              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                السيرة النبوية
-              </h3>
-              <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                رحلة النبي ﷺ من المولد إلى الوفاة
-              </p>
-            </Link>
-
-            <Link to={ROUTES.BOOKMARKS} className="text-center group">
-              <div className="inline-flex p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 mb-3 group-hover:scale-110 transition-transform">
-                <Bookmark className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-              </div>
-              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                المحفوظات
-              </h3>
-              <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                احفظ الأسئلة للمراجعة لاحقاً
-              </p>
-            </Link>
-            <Link to={ROUTES.STATISTICS} className="text-center group">
-              <div className="inline-flex p-3 rounded-xl bg-green-100 dark:bg-green-900/30 mb-3 group-hover:scale-110 transition-transform">
-                <BarChart3 className="w-6 h-6 text-green-600 dark:text-green-400" />
-              </div>
-              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                الإحصائيات
-              </h3>
-              <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                تتبع تقدمك ونتائجك
-              </p>
-            </Link>
-            <Link to={ROUTES.CATEGORIES} className="text-center group">
-              <div className="inline-flex p-3 rounded-xl bg-rose-100 dark:bg-rose-900/30 mb-3 group-hover:scale-110 transition-transform">
-                <Layers className="w-6 h-6 text-rose-600 dark:text-rose-400" />
-              </div>
-              <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                أنواع اختبارات
-              </h3>
-              <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                أكثر من 10 أنواع اختبارات متنوعة
-              </p>
-            </Link>
+      <FadeIn delay={0.3}>
+        <section className="bg-primary-50 dark:bg-primary-900/20 rounded-2xl p-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200 mb-4">
+              لماذا ميراث؟
+            </h2>
+            <p className="text-secondary-500 dark:text-secondary-400 mb-8 max-w-xl mx-auto">
+              تجربة تعليمية متكاملة تجمع بين الاختبارات والمراجعة والاستكشاف
+            </p>
+            <StaggerChildren stagger={0.05} className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              <StaggerItem>
+                <Link to={ROUTES.QURAN_EXPLORER} className="text-center group">
+                  <div className="inline-flex p-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 mb-3 group-hover:scale-110 transition-transform">
+                    <BookOpen className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                  </div>
+                  <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                    استكشاف القرآن
+                  </h3>
+                  <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                    تصفح سور القرآن الكريم واستمع التلاوة
+                  </p>
+                </Link>
+              </StaggerItem>
+              <StaggerItem>
+                <Link to={ROUTES.PERSONALITIES} className="text-center group">
+                  <div className="inline-flex p-3 rounded-xl bg-blue-100 dark:bg-blue-900/30 mb-3 group-hover:scale-110 transition-transform">
+                    <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                    المقالات الإسلامية
+                  </h3>
+                  <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                    تعرف علي كبار العلماء والصحاباء
+                  </p>
+                </Link>
+              </StaggerItem>
+              <StaggerItem>
+                <Link to={ROUTES.SEERAH} className="text-center group">
+                  <div className="inline-flex p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 mb-3 group-hover:scale-110 transition-transform">
+                    <BookOpen className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                    السيرة النبوية
+                  </h3>
+                  <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                    رحلة النبي ﷺ من المولد إلى الوفاة
+                  </p>
+                </Link>
+              </StaggerItem>
+              <StaggerItem>
+                <Link to={ROUTES.BOOKMARKS} className="text-center group">
+                  <div className="inline-flex p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 mb-3 group-hover:scale-110 transition-transform">
+                    <Bookmark className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                    المحفوظات
+                  </h3>
+                  <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                    احفظ الأسئلة للمراجعة لاحقاً
+                  </p>
+                </Link>
+              </StaggerItem>
+              <StaggerItem>
+                <Link to={ROUTES.CATEGORIES} className="text-center group">
+                  <div className="inline-flex p-3 rounded-xl bg-rose-100 dark:bg-rose-900/30 mb-3 group-hover:scale-110 transition-transform">
+                    <Layers className="w-6 h-6 text-rose-600 dark:text-rose-400" />
+                  </div>
+                  <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
+                    أنواع اختبارات
+                  </h3>
+                  <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                    أكثر من 10 أنواع اختبارات متنوعة
+                  </p>
+                </Link>
+              </StaggerItem>
+            </StaggerChildren>
           </div>
-        </div>
-      </section>
+        </section>
+      </FadeIn>
     </div>
   );
 };

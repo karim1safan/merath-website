@@ -1,4 +1,9 @@
+import { motion } from 'motion/react';
 import { formatDuration } from '../../utils';
+
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const Timer = ({ timeLeft, totalTime, className = '' }) => {
   const percentage = totalTime > 0 ? (timeLeft / totalTime) * 100 : 100;
@@ -18,9 +23,17 @@ const Timer = ({ timeLeft, totalTime, className = '' }) => {
 
   return (
     <div className={`flex flex-col items-center gap-2 ${className}`}>
-      <div className={`text-2xl sm:text-3xl font-bold ${getTimerColor()} ${isLow ? 'animate-pulse' : ''}`}>
+      <motion.div
+        className={`text-2xl sm:text-3xl font-bold ${getTimerColor()}`}
+        animate={
+          isLow && !prefersReducedMotion
+            ? { scale: [1, 1.05, 1] }
+            : {}
+        }
+        transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
+      >
         {formatDuration(timeLeft)}
-      </div>
+      </motion.div>
       <div className="w-full h-2 bg-secondary-200 dark:bg-secondary-700 rounded-full overflow-hidden">
         <div
           className={`h-full ${getBarColor()} rounded-full transition-all duration-1000 ease-linear`}

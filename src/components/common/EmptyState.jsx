@@ -1,4 +1,5 @@
 import { Inbox } from 'lucide-react';
+import { FadeIn } from '../ui/Motion';
 import Button from './Button';
 
 const EmptyState = ({
@@ -12,9 +13,7 @@ const EmptyState = ({
   const IconComponent = icon || <Inbox className="w-16 h-16" />;
 
   return (
-    <div
-      className={`flex flex-col items-center justify-center py-12 px-4 text-center ${className}`}
-    >
+    <FadeIn className={`flex flex-col items-center justify-center py-12 px-4 text-center ${className}`}>
       <div className="text-secondary-400 dark:text-secondary-500 mb-4">
         {typeof IconComponent === 'string' ? (
           <span className="text-6xl">{IconComponent}</span>
@@ -33,7 +32,7 @@ const EmptyState = ({
           {actionLabel}
         </Button>
       )}
-    </div>
+    </FadeIn>
   );
 };
 

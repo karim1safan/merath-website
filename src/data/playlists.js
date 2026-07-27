@@ -3,6 +3,8 @@ export const COURSE_CATEGORIES = [
   "الخلافة الراشدة",
   "العقيدة",
   "السيرة",
+  "الحديث",
+  "الصحابة",
 ];
 
 export const PLAYLISTS = [
@@ -53,16 +55,18 @@ export const PLAYLISTS = [
   {
     id: "khalid",
     title: "سيرة خالد بن الوليد",
-    description: "",
-    category: "",
+    description:
+      "دراسة شاملة عن حياة خالد بن الوليد رضي الله عنه وأهم معاركه وغزواته",
+    category: "السيرة",
     channelName: "د. طارق السويدان",
     youtubeUrl:
       "https://www.youtube.com/playlist?list=PLATlJNRzYr-Bbzm5JWheg7kzyyQL2wIxd",
   },
   {
-    id: "battels",
+    id: "battles",
     title: "غزوات النبي",
-    description: "",
+    description:
+      "دراسة مفصلة لغزوات النبي صلى الله عليه وسلم وأحداثها ودروسها المستفادة",
     category: "السيرة",
     channelName: "د. نبيل العوضي",
     youtubeUrl:
@@ -71,8 +75,52 @@ export const PLAYLISTS = [
   {
     id: "hadith",
     title: "مصطلح الحديث — شرح المنطومة البيقونية",
-    description: "",
+    description:
+      "شرح مفصل لمصطلح الحديث من خلال البيقونية للشيخ محمد بن صالح العثيمين",
     category: "الحديث",
     channelName: "ش. محمد بن صالح العثيمين",
+  },
+  {
+    id: "al-qawaid-al-arbaa",
+    title: "شرح القواعد الأربعة",
+    description:
+      "شرح مفصل للقواعد الأربعة للشيخ عبد الرازق البدر مع تطبيقات عملية",
+    category: "العقيدة",
+    channelName: "ش. عبد الرازق البدر",
+    youtubeUrl:
+      "https://www.youtube.com/playlist?list=PLClZ7RmnwNVM1tVOj5KCOAjDgRLntDFsG",
+    videoCount: 3,
+  },
+  {
+    id: "al-usul-al-sitta",
+    title: "شرح الأصول الستة",
+    description:
+      "شرح مفصل للأصول الستة للشيخ عبد الرازق البدر في العقيدة الإسلامية",
+    category: "العقيدة",
+    channelName: "ش. عبد الرازق البدر",
+    youtubeUrl:
+      "https://www.youtube.com/playlist?list=PLClZ7RmnwNVOSwfF9o53SkQHstf2GXNEx",
+    videoCount: 3,
+  },
+  {
+    id: "sahaba-part-1",
+    title: "صور من حياة الصحابة",
+    description:
+      "دراسة شاملة عن حياة الصحابة الجزء الأول والثاني وأهم معاركها وغزواتها",
+    category: "الصحابة",
+    channelName: "د. علي بشير أحمد",
+    youtubeUrl:
+      "https://www.youtube.com/playlist?list=PLCp8pahoEhI5pVaokIYvyzOpgDtDAVQEU",
+    videoCount: 108,
+  },
+  {
+    id: "sahaba-part-2",
+    title: "صور من حياة الصحابيات",
+    description: "دراسة شاملة عن حياة الصحابيات وأهم معاركها وغزواتها",
+    category: "الصحابة",
+    channelName: "د. علي بشير أحمد",
+    youtubeUrl:
+      "https://www.youtube.com/playlist?list=PLCp8pahoEhI5LjOVYdry3QPKStKklGIyN",
+    videoCount: 8,
   },
 ];
