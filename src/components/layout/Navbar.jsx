@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   BookOpen,
@@ -28,9 +28,12 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef(null);
+  const hamburgerRef = useRef(null);
+  const closeBtnRef = useRef(null);
 
-  const closeMobile = () => setMobileOpen(false);
-  const closeMore = () => setMoreOpen(false);
+  const closeMobile = useCallback(() => setMobileOpen(false), []);
+  const closeMore = useCallback(() => setMoreOpen(false), []);
+  const toggleMobile = useCallback(() => setMobileOpen((prev) => !prev), []);
 
   useEffect(() => {
     if (mobileOpen) {
@@ -55,6 +58,29 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [moreOpen]);
 
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        if (mobileOpen) setMobileOpen(false);
+        if (moreOpen) setMoreOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [mobileOpen, moreOpen]);
+
+  useEffect(() => {
+    if (mobileOpen && closeBtnRef.current) {
+      closeBtnRef.current.focus();
+    }
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen && hamburgerRef.current) {
+      hamburgerRef.current.focus();
+    }
+  }, [mobileOpen]);
+
   const mainLinks = [
     { path: ROUTES.HOME, label: "الرئيسية", icon: Home },
     { path: ROUTES.PRAYER, label: "مواقيت الصلاة", icon: Clock },
@@ -77,6 +103,30 @@ const Navbar = () => {
   const isActive = (path) => {
     if (path === ROUTES.HOME) return location.pathname === path;
     return location.pathname.startsWith(path);
+  };
+
+  const renderNavLink = (link) => {
+    const Icon = link.icon;
+    return (
+      <Link
+        key={link.path}
+        to={link.path}
+        onClick={closeMobile}
+        className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
+          isActive(link.path)
+            ? "text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20"
+            : "text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-secondary-100 dark:hover:bg-secondary-700"
+        }`}
+      >
+        <Icon className="w-5 h-5 flex-shrink-0" />
+        <span>{link.label}</span>
+        {link.count > 0 && (
+          <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold rounded-full bg-primary-600 text-white dark:bg-primary-400 dark:text-secondary-900 mr-auto">
+            {link.count}
+          </span>
+        )}
+      </Link>
+    );
   };
 
   return (
@@ -110,6 +160,7 @@ const Navbar = () => {
             <div className="relative" ref={moreRef}>
               <button
                 onClick={() => setMoreOpen(!moreOpen)}
+                aria-expanded={moreOpen}
                 className={`flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
                   moreLinks.some((l) => isActive(l.path))
                     ? "text-primary-600 dark:text-primary-400 font-bold"
@@ -124,33 +175,38 @@ const Navbar = () => {
                 />
               </button>
 
-              {moreOpen && (
-                <div className="absolute top-full right-0 mt-1 w-44 bg-white dark:bg-secondary-800 rounded-xl shadow-lg border border-secondary-200 dark:border-secondary-700 py-1 z-50">
-                  {moreLinks.map((link) => {
-                    const Icon = link.icon;
-                    return (
-                      <Link
-                        key={link.path}
-                        to={link.path}
-                        onClick={closeMore}
-                        className={`flex items-center gap-2 px-3 py-2 text-sm transition-colors duration-200 ${
-                          isActive(link.path)
-                            ? "text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20"
-                            : "text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-secondary-100 dark:hover:bg-secondary-700"
-                        }`}
-                      >
-                        <Icon className="w-4 h-4" />
-                        <span>{link.label}</span>
-                        {link.count > 0 && (
-                          <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold rounded-full bg-primary-600 text-white dark:bg-primary-400 dark:text-secondary-900 mr-auto">
-                            {link.count}
-                          </span>
-                        )}
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
+              <div
+                className={`absolute top-full right-0 mt-1 w-44 bg-white dark:bg-secondary-800 rounded-xl shadow-lg border border-secondary-200 dark:border-secondary-700 py-1 z-50 origin-top-right transition-all duration-200 ${
+                  moreOpen
+                    ? "opacity-100 scale-100 translate-y-0"
+                    : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                }`}
+                aria-hidden={!moreOpen}
+              >
+                {moreLinks.map((link) => {
+                  const Icon = link.icon;
+                  return (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      onClick={closeMore}
+                      className={`flex items-center gap-2 px-3 py-2 text-sm transition-colors duration-200 ${
+                        isActive(link.path)
+                          ? "text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20"
+                          : "text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-secondary-100 dark:hover:bg-secondary-700"
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      <span>{link.label}</span>
+                      {link.count > 0 && (
+                        <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold rounded-full bg-primary-600 text-white dark:bg-primary-400 dark:text-secondary-900 mr-auto">
+                          {link.count}
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
@@ -159,8 +215,9 @@ const Navbar = () => {
 
             {/* Mobile hamburger */}
             <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 rounded-lg bg-secondary-100 dark:bg-secondary-700 hover:bg-secondary-200 dark:hover:bg-secondary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              ref={hamburgerRef}
+              onClick={toggleMobile}
+              className="md:hidden p-2.5 rounded-lg bg-secondary-100 dark:bg-secondary-700 hover:bg-secondary-200 dark:hover:bg-secondary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
               aria-label={mobileOpen ? "إغلاق القائمة" : "فتح القائمة"}
               aria-expanded={mobileOpen}
             >
@@ -174,19 +231,21 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile overlay */}
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={closeMobile}
-          aria-hidden="true"
-        />
-      )}
+      <div
+        className={`fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300 ${
+          mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={closeMobile}
+        aria-hidden="true"
+      />
 
       {/* Mobile side drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-72 bg-white dark:bg-secondary-800 shadow-xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
-          mobileOpen ? "translate-x-0" : "translate-x-full"
+        role="dialog"
+        aria-modal="true"
+        aria-label="القائمة"
+        className={`fixed top-0 left-0 h-full w-72 bg-white dark:bg-secondary-800 shadow-xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between p-4 border-b border-secondary-200 dark:border-secondary-700">
@@ -201,6 +260,7 @@ const Navbar = () => {
             </span>
           </Link>
           <button
+            ref={closeBtnRef}
             onClick={closeMobile}
             className="p-2 rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-700 transition-colors duration-200"
             aria-label="إغلاق القائمة"

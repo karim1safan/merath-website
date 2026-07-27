@@ -7,6 +7,7 @@ import Card from '../components/common/Card';
 import Button from '../components/common/Button';
 import Badge from '../components/common/Badge';
 import EmptyState from '../components/common/EmptyState';
+import { FadeIn } from '../components/ui/Motion';
 
 const BookmarksPage = () => {
   const navigate = useNavigate();
@@ -30,26 +31,29 @@ const BookmarksPage = () => {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200">
-          الأسئلة المحفوظة
-        </h1>
-        <div className="flex items-center gap-3">
-          <Badge variant="primary" size="lg">
-            {bookmarks.length} سؤال
-          </Badge>
-          <Button
-            onClick={clearBookmarks}
-            variant="ghost"
-            size="sm"
-            className="text-danger hover:bg-danger/10"
-          >
-            <Trash2 className="w-4 h-4" />
-          </Button>
+      <FadeIn>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200">
+            الأسئلة المحفوظة
+          </h1>
+          <div className="flex items-center gap-3">
+            <Badge variant="primary" size="lg">
+              {bookmarks.length} سؤال
+            </Badge>
+            <Button
+              onClick={clearBookmarks}
+              variant="ghost"
+              size="sm"
+              className="text-danger hover:bg-danger/10"
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
-      </div>
+      </FadeIn>
 
-      <Card>
+      <FadeIn delay={0.1}>
+        <Card>
         <div className="flex items-center justify-between mb-4">
           <Badge variant="primary" size="md">
             {currentQuestion.category}
@@ -102,8 +106,10 @@ const BookmarksPage = () => {
           </div>
         )}
       </Card>
+      </FadeIn>
 
-      <div className="flex items-center justify-between gap-4">
+      <FadeIn delay={0.15}>
+        <div className="flex items-center justify-between gap-4">
         <Button
           onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
           variant="secondary"
@@ -144,6 +150,7 @@ const BookmarksPage = () => {
           </Button>
         )}
       </div>
+      </FadeIn>
     </div>
   );
 };

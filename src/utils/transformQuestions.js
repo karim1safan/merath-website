@@ -3,23 +3,11 @@ const CATEGORY_MAP = {
   'العقيدة': 'akida',
   'الحديث': 'hadith',
   'الفقه': 'figh',
+  'التاريخ': 'history',
   'اللغة العربية': 'arabia',
 };
 
-const HISTORY_TOPIC_MAP = {
-  'العهد النبوي': 'sirah',
-  'الخلفاء الراشدون': 'kholfa',
-  'العهد العباسي': 'abasi',
-  'العهد الأموي': 'amwi',
-  'العهد العثماني': 'osmany',
-  'عهد المماليك': 'mamalik',
-  'التاريخ المعاصر': 'moasir',
-};
-
-export function mapCategoryName(arabicName, topic) {
-  if (arabicName === 'التاريخ' && topic && HISTORY_TOPIC_MAP[topic]) {
-    return HISTORY_TOPIC_MAP[topic];
-  }
+export function mapCategoryName(arabicName) {
   return CATEGORY_MAP[arabicName] || 'tafseer';
 }
 
@@ -34,7 +22,7 @@ export function transformApiQuestion(apiQuestion) {
     correctAnswer: correctIndex >= 0 ? correctIndex : 0,
     explanation: apiQuestion.link || '',
     difficulty: 'medium',
-    category: mapCategoryName(apiQuestion.category, apiQuestion.topic),
+    category: mapCategoryName(apiQuestion.category),
     topic: apiQuestion.topic || '',
   };
 }

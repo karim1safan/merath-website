@@ -78,27 +78,27 @@ const PersonalityDetailPage = () => {
         <Markdown
           components={{
             h2: ({ children }) => (
-              <h2 className="text-2xl font-bold text-secondary-800 dark:text-secondary-200 mt-8 mb-4 pb-2 border-b border-secondary-200 dark:border-secondary-700">
+              <h2 className="text-3xl font-bold text-secondary-800 dark:text-secondary-200 mt-8 mb-4 pb-2 border-b border-secondary-200 dark:border-secondary-700">
                 {children}
               </h2>
             ),
             h3: ({ children }) => (
-              <h3 className="text-xl font-semibold text-secondary-800 dark:text-secondary-200 mt-6 mb-3">
+              <h3 className="text-2xl font-semibold text-secondary-800 dark:text-secondary-200 mt-6 mb-3">
                 {children}
               </h3>
             ),
             p: ({ children }) => (
-              <p className="text-secondary-700 dark:text-secondary-300 leading-relaxed mb-4">
+              <p className="text-lg text-secondary-700 dark:text-secondary-300 leading-relaxed mb-4">
                 {children}
               </p>
             ),
             ul: ({ children }) => (
-              <ul className="list-disc list-inside space-y-2 mb-4 text-secondary-700 dark:text-secondary-300">
+              <ul className="list-disc list-inside space-y-2 mb-4 text-lg text-secondary-700 dark:text-secondary-300">
                 {children}
               </ul>
             ),
             li: ({ children }) => (
-              <li className="leading-relaxed">{children}</li>
+              <li className="text-lg leading-relaxed">{children}</li>
             ),
             strong: ({ children }) => (
               <strong className="text-secondary-800 dark:text-secondary-200 font-semibold">
@@ -106,28 +106,51 @@ const PersonalityDetailPage = () => {
               </strong>
             ),
             blockquote: ({ children }) => (
-              <blockquote className="border-r-4 border-primary-500 pr-4 italic text-secondary-600 dark:text-secondary-400 my-4">
+              <blockquote className="border-r-4 border-primary-500 pr-4 italic text-lg text-secondary-600 dark:text-secondary-400 my-4">
                 {children}
               </blockquote>
             ),
             a: ({ href, children }) => {
               const isYouTube = href && (href.includes('youtube.com') || href.includes('youtu.be'));
               if (isYouTube) {
+                const videoId = (() => {
+                  try {
+                    if (href.includes('youtu.be/')) {
+                      return href.split('youtu.be/')[1]?.split(/[?&]/)[0];
+                    }
+                    const url = new URL(href);
+                    return url.searchParams.get('v');
+                  } catch {
+                    return null;
+                  }
+                })();
                 return (
                   <a
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors duration-200 no-underline my-4"
+                    className="group flex items-center gap-4 p-4 rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 no-underline my-6"
                   >
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-600 flex items-center justify-center">
-                      <Play className="w-5 h-5 text-white fill-white" />
-                    </div>
+                    {videoId && (
+                      <div className="flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden bg-secondary-900 relative">
+                        <img
+                          src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
+                          alt=""
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+                          <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center">
+                            <Play className="w-4 h-4 text-white fill-white" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     <div className="flex-1 min-w-0">
-                      <span className="text-sm font-semibold text-red-700 dark:text-red-400 block">
+                      <span className="text-sm font-semibold text-red-700 dark:text-red-400 block mb-1">
                         شاهد الفيديو
                       </span>
-                      <span className="text-xs text-red-500 dark:text-red-500 truncate block">
+                      <span className="text-xs text-red-500 dark:text-red-400/70 line-clamp-2 block">
                         {children}
                       </span>
                     </div>

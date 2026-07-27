@@ -18,7 +18,3 @@ export async function fetchReciters(language = 'ar') {
   return data.reciters || [];
 }
 
-export async function fetchTafasir(language = 'ar') {
-  const data = await fetchFromMp3Quran(`/tafasir?language=${language}`);
-  return data.tafasir || [];
-}

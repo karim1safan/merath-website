@@ -1,3 +1,9 @@
+import { motion } from 'motion/react';
+
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const Button = ({
   children,
   variant = 'primary',
@@ -9,7 +15,7 @@ const Button = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    'inline-flex items-center justify-center font-semibold rounded-xl transition-colors duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variants = {
     primary:
@@ -31,9 +37,11 @@ const Button = ({
   };
 
   return (
-    <button
+    <motion.button
       onClick={onClick}
       disabled={disabled || loading}
+      whileHover={prefersReducedMotion || disabled ? {} : { scale: 1.02 }}
+      whileTap={prefersReducedMotion || disabled ? {} : { scale: 0.98 }}
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
@@ -60,7 +68,7 @@ const Button = ({
         </svg>
       )}
       {children}
-    </button>
+    </motion.button>
   );
 };
 

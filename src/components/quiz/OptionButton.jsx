@@ -1,4 +1,9 @@
+import { motion } from 'motion/react';
 import { Check, X } from 'lucide-react';
+
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const OptionButton = ({
   option,
@@ -43,10 +48,25 @@ const OptionButton = ({
 
   const optionLabels = ['أ', 'ب', 'ج', 'د'];
 
+  const getAnimation = () => {
+    if (prefersReducedMotion) return {};
+    if (showResult && isCorrect) return { scale: [1, 1.02, 1] };
+    if (showResult && isSelected && !isCorrect) return { x: [0, -4, 4, -4, 0] };
+    return {};
+  };
+
+  const getTransition = () => {
+    if (showResult && isCorrect) return { duration: 0.3 };
+    if (showResult && isSelected && !isCorrect) return { duration: 0.4 };
+    return {};
+  };
+
   return (
-    <button
+    <motion.button
       onClick={onClick}
       disabled={disabled || showResult}
+      animate={getAnimation()}
+      transition={getTransition()}
       className={`w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 ease-out text-right ${
         getOptionStyles()
       } ${disabled || showResult ? 'cursor-default' : 'cursor-pointer'}`}
@@ -56,7 +76,7 @@ const OptionButton = ({
       </span>
       <span className="flex-1 text-sm sm:text-base">{option}</span>
       {getOptionIcon()}
-    </button>
+    </motion.button>
   );
 };
 

@@ -3,38 +3,12 @@ import {
   fetchRandomQuestions,
   fetchMultiplePages,
   fetchQuestionsByTopic,
-  fetchCategories,
 } from '../services/quizApi';
+import { CATEGORIES } from '../constants';
 import { transformApiQuestions } from '../utils/transformQuestions';
 import { shuffleArray } from '../utils';
 
-const HISTORY_CATEGORIES = {
-  sirah: 'sirah',
-  kholfa: 'kholfa',
-  amwi: 'amwi',
-  osmany: 'osmany',
-  mamalik: 'mamalik',
-  abasi: 'abasi',
-  moasir: 'moasir',
-};
-
-let categoryMapCache = null;
-
-async function getCategoryMap() {
-  if (categoryMapCache) return categoryMapCache;
-
-  const categories = await fetchCategories();
-  categoryMapCache = {};
-  categories.forEach((cat) => {
-    categoryMapCache[cat.englishName] = cat.id;
-  });
-  Object.keys(HISTORY_CATEGORIES).forEach((key) => {
-    categoryMapCache[key] = 5;
-  });
-  return categoryMapCache;
-}
-
-function useQuizApi(category, count = 20, initialQuestions = null) {
+function useQuizApi(category, count = 20, initialQuestions = null, topicSlug = null) {
   const [questions, setQuestions] = useState(initialQuestions || []);
   const [loading, setLoading] = useState(!initialQuestions);
   const [error, setError] = useState(null);
@@ -52,11 +26,11 @@ function useQuizApi(category, count = 20, initialQuestions = null) {
         let rawData;
 
         if (category) {
-          const categoryMap = await getCategoryMap();
-          const categoryId = categoryMap[category];
+          const categoryInfo = CATEGORIES.find((c) => c.id === category);
+          const categoryId = categoryInfo?.apiId;
 
-          if (categoryId && HISTORY_CATEGORIES[category]) {
-            rawData = await fetchQuestionsByTopic(categoryId, HISTORY_CATEGORIES[category], count);
+          if (topicSlug && categoryId) {
+            rawData = await fetchQuestionsByTopic(categoryId, topicSlug, count);
           } else if (categoryId) {
             rawData = await fetchMultiplePages(categoryId, 5, 50);
           } else {
@@ -89,7 +63,7 @@ function useQuizApi(category, count = 20, initialQuestions = null) {
     return () => {
       cancelled = true;
     };
-  }, [category, count, initialQuestions]);
+  }, [category, count, initialQuestions, topicSlug]);
 
   return { questions, loading, error };
 }

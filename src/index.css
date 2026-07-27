@@ -28,7 +28,7 @@
   --color-secondary-950: #020617;
 
   --color-success: #22c55e;
-  --color-danger: #ef4444;
+--color-danger: #ef4444;
   --color-warning: #f59e0b;
 
   --font-cairo: "Cairo", sans-serif;
@@ -113,17 +113,18 @@
   }
 
   .mushaf-reading {
-    @apply font-amiri text-[26px] md:text-[30px] leading-[2.8] text-justify tracking-wide;
+    @apply font-amiri text-[26px] md:text-[30px] leading-[2.4] text-justify tracking-wider;
   }
 
   .dark .mushaf-reading {
-    @apply text-white;
+    @apply text-secondary-200/90;
   }
 
   .mushaf-verse-num {
-    @apply inline-flex items-center justify-center w-10 h-10 rounded-full
-           border-2 border-primary-200 text-primary-700 font-amiri font-bold text-sm
-           mx-1 align-middle relative;
+    @apply inline-flex items-center justify-center w-9 h-9 rounded-full
+           border-[1.5px] border-primary-200 text-primary-700 font-amiri font-bold text-base
+           mx-1.5 align-middle relative flex-shrink-0
+           transition-transform duration-200 hover:scale-110;
   }
 
   .dark .mushaf-verse-num {
@@ -142,6 +143,19 @@
 
   .dark .mushaf-verse-num-star {
     background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 2L24.5 15.5H38L27 24L31.5 37.5L20 29L8.5 37.5L13 24L2 15.5H15.5L20 2Z' stroke='%234ade80' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat center center;
+  }
+
+  .mushaf-ornament {
+    @apply w-24 h-[1px] mx-auto my-4;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+  }
+
+  .mushaf-ornament-light {
+    @apply text-primary-300/60;
+  }
+
+  .dark .mushaf-ornament-light {
+    @apply text-primary-600/40;
   }
 
   .audio-player-card {
@@ -174,12 +188,12 @@
   }
 
   .mushaf-bismillah {
-    @apply font-amiri text-[32px] md:text-[40px] font-bold text-center
-           leading-relaxed text-secondary-800 py-6;
+    @apply font-amiri text-[36px] md:text-[44px] font-bold text-center
+           leading-relaxed text-amber-700/80 py-8 tracking-wide;
   }
 
   .dark .mushaf-bismillah {
-    @apply text-amber-100;
+    @apply text-amber-200/80;
   }
 }
 

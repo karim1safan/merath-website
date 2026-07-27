@@ -1,8 +1,13 @@
+import { motion } from 'motion/react';
 import { ExternalLink } from 'lucide-react';
 import OptionButton from './OptionButton';
 import Badge from '../common/Badge';
 import BookmarkButton from '../common/BookmarkButton';
 import { DIFFICULTY_LEVELS } from '../../constants';
+
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const QuestionCard = ({
   question,
@@ -15,7 +20,13 @@ const QuestionCard = ({
   const difficultyInfo = DIFFICULTY_LEVELS[question.difficulty];
 
   return (
-    <div className="bg-white dark:bg-secondary-800 rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 transition-colors duration-200">
+    <motion.div
+      key={questionNumber}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+      className="bg-white dark:bg-secondary-800 rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 transition-colors duration-200"
+    >
       <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
         <Badge variant="primary" size="sm">
           السؤال {questionNumber} من {totalQuestions}
@@ -64,7 +75,7 @@ const QuestionCard = ({
           </a>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

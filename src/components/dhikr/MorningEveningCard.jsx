@@ -1,5 +1,12 @@
-import { useState, useRef } from 'react';
-import { ChevronDown, ChevronUp, Volume2, VolumeX, BookOpen, Check } from 'lucide-react';
+import { useState, useRef } from "react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Volume2,
+  VolumeX,
+  BookOpen,
+  Check,
+} from "lucide-react";
 
 const MorningEveningCard = ({ dhikr, onComplete }) => {
   const [count, setCount] = useState(0);
@@ -10,6 +17,7 @@ const MorningEveningCard = ({ dhikr, onComplete }) => {
 
   const isComplete = count >= dhikr.count;
   const progress = Math.min(count / dhikr.count, 1);
+  const circumference = 2 * Math.PI * 52;
 
   const handleTap = () => {
     if (isComplete) return;
@@ -38,14 +46,16 @@ const MorningEveningCard = ({ dhikr, onComplete }) => {
     <div
       onClick={handleTap}
       className={`rounded-2xl shadow-lg p-6 bg-white dark:bg-secondary-800 border-2 transition-all duration-300 active:scale-[0.98] ${
-        isComplete ? 'cursor-default border-emerald-400 dark:border-emerald-500' : 'cursor-pointer border-secondary-100 dark:border-secondary-700 hover:shadow-xl'
+        isComplete
+          ? "cursor-default border-emerald-400 dark:border-emerald-500"
+          : "cursor-pointer border-secondary-100 dark:border-secondary-700 hover:shadow-xl"
       }`}
     >
       {dhikr.audio && (
         <audio ref={audioRef} src={dhikr.audio} onEnded={onAudioEnded} />
       )}
 
-      <p className="text-2xl leading-[2.2] text-right text-secondary-800 dark:text-secondary-200 font-amiri mb-5">
+      <p className="text-2xl leading-[2.2] text-right text-secondary-800 dark:text-secondary-200  mb-5">
         {dhikr.content}
       </p>
 
@@ -53,8 +63,8 @@ const MorningEveningCard = ({ dhikr, onComplete }) => {
         <span
           className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
             isComplete
-              ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
-              : 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
+              ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"
+              : "bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400"
           }`}
         >
           {isComplete ? (
@@ -71,7 +81,7 @@ const MorningEveningCard = ({ dhikr, onComplete }) => {
           <button
             onClick={toggleAudio}
             className="p-2 rounded-xl hover:bg-secondary-100 dark:hover:bg-secondary-700 transition-colors"
-            aria-label={isPlaying ? 'إيقاف الصوت' : 'تشغيل الصوت'}
+            aria-label={isPlaying ? "إيقاف الصوت" : "تشغيل الصوت"}
           >
             {isPlaying ? (
               <VolumeX className="w-5 h-5 text-primary-500" />
@@ -82,25 +92,46 @@ const MorningEveningCard = ({ dhikr, onComplete }) => {
         )}
       </div>
 
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-1.5">
-          <span className="text-xs text-secondary-500 dark:text-secondary-400">
-            {count} / {dhikr.count}
-          </span>
-        </div>
-        <div className="h-2 rounded-full bg-secondary-100 dark:bg-secondary-700 overflow-hidden">
-          <div
-            className={`h-full rounded-full transition-all duration-300 ease-out ${
-              isComplete ? 'bg-emerald-500' : 'bg-primary-500'
-            }`}
-            style={{ width: `${progress * 100}%` }}
-          />
+      <div className="flex justify-center mb-4">
+        <div className="relative w-28 h-28">
+          <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
+            <circle
+              cx="60"
+              cy="60"
+              r="52"
+              className="fill-none stroke-secondary-200 dark:stroke-secondary-700"
+              strokeWidth="8"
+            />
+            <circle
+              cx="60"
+              cy="60"
+              r="52"
+              className={`fill-none transition-all duration-500 ease-out ${
+                isComplete
+                  ? "stroke-emerald-500 dark:stroke-emerald-400"
+                  : "stroke-primary-500 dark:stroke-primary-400"
+              }`}
+              strokeWidth="8"
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              strokeDashoffset={circumference * (1 - progress)}
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            {isComplete ? (
+              <Check className="w-10 h-10 text-emerald-500 dark:text-emerald-400" />
+            ) : (
+              <span className="text-xl font-bold text-secondary-800 dark:text-secondary-200">
+                {count}/{dhikr.count}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
       {dhikr.fadl && (
         <div className="mb-4 border-t border-secondary-100 dark:border-secondary-700 pt-4">
-          <p className="text-[15px] leading-relaxed text-secondary-500 dark:text-secondary-400 text-right font-amiri">
+          <p className="text-[15px] leading-relaxed text-secondary-500 dark:text-secondary-400 text-right ">
             {dhikr.fadl}
           </p>
         </div>
@@ -126,7 +157,7 @@ const MorningEveningCard = ({ dhikr, onComplete }) => {
             )}
           </button>
           {showHadith && (
-            <p className="text-[15px] leading-relaxed text-secondary-600 dark:text-secondary-300 text-right px-3 pb-3 font-amiri">
+            <p className="text-[15px] leading-relaxed text-secondary-600 dark:text-secondary-300 text-right px-3 pb-3 ">
               {dhikr.hadith_text}
             </p>
           )}
@@ -153,7 +184,7 @@ const MorningEveningCard = ({ dhikr, onComplete }) => {
             )}
           </button>
           {showVocabulary && (
-            <p className="text-[15px] leading-relaxed text-secondary-600 dark:text-secondary-300 text-right px-3 pb-3 font-amiri">
+            <p className="text-[15px] leading-relaxed text-secondary-600 dark:text-secondary-300 text-right px-3 pb-3 ">
               {dhikr.explanation_of_hadith_vocabulary}
             </p>
           )}

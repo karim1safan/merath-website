@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchQuranSurah } from '../services/quranTextApi';
-import { fetchSuwar, fetchReciters, fetchTafasir } from '../services/quranAudioApi';
+import { fetchSuwar, fetchReciters } from '../services/quranAudioApi';
 
 const SURAH_LIST = Array.from({ length: 114 }, (_, i) => i + 1);
 
@@ -76,42 +76,6 @@ const useReciters = () => {
   return { reciters, loading, error };
 };
 
-const useTafasir = () => {
-  const [tafasir, setTafasir] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await fetchTafasir('ar');
-        if (!cancelled) {
-          setTafasir(data);
-        }
-      } catch (err) {
-        if (!cancelled) {
-          console.error('Failed to fetch tafasir:', err);
-          setError(err.message);
-          setTafasir([]);
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
-    }
-
-    load();
-    return () => { cancelled = true; };
-  }, []);
-
-  return { tafasir, loading, error };
-};
-
 const useQuranSurah = (surahNumber) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -149,4 +113,4 @@ const useQuranSurah = (surahNumber) => {
   return { data, loading, error };
 };
 
-export { useQuranExplorer, useReciters, useTafasir, useQuranSurah, SURAH_LIST };
+export { useQuranExplorer, useReciters, useQuranSurah, SURAH_LIST };

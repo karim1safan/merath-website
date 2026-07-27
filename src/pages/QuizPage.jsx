@@ -15,12 +15,14 @@ const QuizPage = () => {
   const { category } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const topicSlug = searchParams.get('topic');
   const searchQuestions = location.state?.questions || null;
   const [timerDuration, setTimerDuration] = useState(0);
   const [showTimerSelect, setShowTimerSelect] = useState(true);
   const hasNavigatedRef = useRef(false);
 
-  const { questions, loading, error } = useQuizApi(category, 20, searchQuestions);
+  const { questions, loading, error } = useQuizApi(category, 20, searchQuestions, topicSlug);
 
   const categoryInfo = searchQuestions
     ? { name: 'نتائج البحث', icon: null, color: 'bg-primary-100 dark:bg-primary-900/30' }

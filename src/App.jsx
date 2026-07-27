@@ -1,12 +1,15 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import MainLayout from './layouts/MainLayout';
 import Skeleton from './components/common/Skeleton';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import { PageTransition } from './components/ui/Motion';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
 const CategoriesPage = lazy(() => import('./pages/CategoriesPage'));
+const TopicsPage = lazy(() => import('./pages/TopicsPage'));
 const QuizPage = lazy(() => import('./pages/QuizPage'));
 const ResultPage = lazy(() => import('./pages/ResultPage'));
 const ReviewPage = lazy(() => import('./pages/ReviewPage'));
@@ -26,6 +29,10 @@ const BattleDetailPage = lazy(() => import('./pages/BattleDetailPage'));
 const AdhkarPage = lazy(() => import('./pages/AdhkarPage'));
 const PrayerTimesPage = lazy(() => import('./pages/PrayerTimesPage'));
 const MorningEveningAdhkarPage = lazy(() => import('./pages/MorningEveningAdhkarPage'));
+const HisnPage = lazy(() => import('./pages/HisnPage'));
+const MorningAdhkarPage = lazy(() => import('./pages/MorningAdhkarPage'));
+const EveningAdhkarPage = lazy(() => import('./pages/EveningAdhkarPage'));
+const SalafQuotesPage = lazy(() => import('./pages/SalafQuotesPage'));
 const CoursesPage = lazy(() => import('./pages/CoursesPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
@@ -50,6 +57,50 @@ const LoadingFallback = () => (
   </div>
 );
 
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <PageTransition key={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/quiz/sira" element={<Navigate to="/quiz/history" replace />} />
+          <Route path="/quiz/:category/topics" element={<TopicsPage />} />
+          <Route path="/quiz/:category" element={<QuizPage />} />
+          <Route path="/quiz/search" element={<QuizPage />} />
+          <Route path="/result" element={<ResultPage />} />
+          <Route path="/review" element={<ReviewPage />} />
+          <Route path="/statistics" element={<StatisticsPage />} />
+          <Route path="/bookmarks" element={<BookmarksPage />} />
+          <Route path="/articles" element={<PersonalitiesPage />} />
+          <Route path="/articles/:id" element={<PersonalityDetailPage />} />
+          <Route path="/quiz/quran" element={<QuranQuizPage />} />
+          <Route path="/quiz/hadith" element={<HadithQuizPage />} />
+          <Route path="/quiz/gharib" element={<GharibQuizPage />} />
+          <Route path="/quran" element={<QuranExplorerPage />} />
+          <Route path="/quran/:surahNumber" element={<QuranSurahPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/seerah" element={<SeerahPage />} />
+          <Route path="/seerah/battles" element={<BattlesPage />} />
+          <Route path="/seerah/battles/:id" element={<BattleDetailPage />} />
+          <Route path="/adhikr" element={<AdhkarPage />} />
+          <Route path="/adhikr/hisn" element={<HisnPage />} />
+          <Route path="/adhikr/morning" element={<MorningAdhkarPage />} />
+          <Route path="/adhikr/evening" element={<EveningAdhkarPage />} />
+          <Route path="/adhikr/quotes" element={<SalafQuotesPage />} />
+          <Route path="/adhikr/morning-evening" element={<MorningEveningAdhkarPage />} />
+          <Route path="/prayer" element={<PrayerTimesPage />} />
+          <Route path="/personalities" element={<PersonalitiesPage />} />
+          <Route path="/personalities/:id" element={<PersonalityDetailPage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </PageTransition>
+    </AnimatePresence>
+  );
+};
+
 function App() {
   return (
     <ErrorBoundary>
@@ -57,33 +108,7 @@ function App() {
         <Router>
           <MainLayout>
             <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/categories" element={<CategoriesPage />} />
-                <Route path="/quiz/sira" element={<Navigate to="/quiz/sirah" replace />} />
-                <Route path="/quiz/:category" element={<QuizPage />} />
-                <Route path="/quiz/search" element={<QuizPage />} />
-                <Route path="/result" element={<ResultPage />} />
-                <Route path="/review" element={<ReviewPage />} />
-                <Route path="/statistics" element={<StatisticsPage />} />
-                <Route path="/bookmarks" element={<BookmarksPage />} />
-                <Route path="/personalities" element={<PersonalitiesPage />} />
-                <Route path="/personalities/:id" element={<PersonalityDetailPage />} />
-                <Route path="/quiz/quran" element={<QuranQuizPage />} />
-                <Route path="/quiz/hadith" element={<HadithQuizPage />} />
-                <Route path="/quiz/gharib" element={<GharibQuizPage />} />
-                <Route path="/quran" element={<QuranExplorerPage />} />
-                <Route path="/quran/:surahNumber" element={<QuranSurahPage />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/seerah" element={<SeerahPage />} />
-                <Route path="/seerah/battles" element={<BattlesPage />} />
-                <Route path="/seerah/battles/:id" element={<BattleDetailPage />} />
-                <Route path="/adhikr" element={<AdhkarPage />} />
-                <Route path="/adhikr/morning-evening" element={<MorningEveningAdhkarPage />} />
-                <Route path="/prayer" element={<PrayerTimesPage />} />
-                <Route path="/courses" element={<CoursesPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
+              <AnimatedRoutes />
             </Suspense>
           </MainLayout>
         </Router>
