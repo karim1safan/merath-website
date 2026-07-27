@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Moon,
-  Sun,
   BookOpen,
   Home,
   LayoutGrid,
@@ -16,12 +14,16 @@ import {
   GraduationCap,
   Users,
   Bookmark,
+  Clock,
 } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
+import useBookmarks from "../../hooks/useBookmarks";
 import { ROUTES } from "../../constants";
+import CinematicThemeToggle from "../common/CinematicThemeToggle";
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
+  const { bookmarks } = useBookmarks();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -81,9 +83,10 @@ const Navbar = () => {
 
   const mainLinks = [
     { path: ROUTES.HOME, label: "الرئيسية", icon: Home },
+    { path: ROUTES.PRAYER, label: "مواقيت الصلاة", icon: Clock },
     { path: ROUTES.CATEGORIES, label: "اختبارات", icon: LayoutGrid },
     { path: ROUTES.SEARCH, label: "بحث", icon: Search },
-    { path: ROUTES.QURAN_EXPLORER, label: " المصحف", icon: BookOpen },
+    { path: ROUTES.QURAN_EXPLORER, label: "المصحف", icon: BookOpen },
     { path: ROUTES.SEERAH, label: "السيرة", icon: ScrollText },
     { path: ROUTES.STATISTICS, label: "الإحصائيات", icon: BarChart3 },
   ];
@@ -92,7 +95,7 @@ const Navbar = () => {
     { path: ROUTES.ADHKAR, label: "الأذكار", icon: Heart },
     { path: ROUTES.COURSES, label: "الدورات", icon: GraduationCap },
     { path: ROUTES.PERSONALITIES, label: "مقالات", icon: Users },
-    { path: ROUTES.BOOKMARKS, label: "المفضلة", icon: Bookmark },
+    { path: ROUTES.BOOKMARKS, label: "المفضلة", icon: Bookmark, count: bookmarks?.length },
   ];
 
   const navLinks = [...mainLinks, ...moreLinks];
@@ -137,6 +140,7 @@ const Navbar = () => {
             </span>
           </Link>
 
+          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1">
             {mainLinks.map((link) => (
               <Link
@@ -144,7 +148,7 @@ const Navbar = () => {
                 to={link.path}
                 className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
                   isActive(link.path)
-                    ? "text-primary-600 dark:text-primary-400"
+                    ? "text-primary-600 dark:text-primary-400 font-bold"
                     : "text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400"
                 }`}
               >
@@ -159,7 +163,7 @@ const Navbar = () => {
                 aria-expanded={moreOpen}
                 className={`flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
                   moreLinks.some((l) => isActive(l.path))
-                    ? "text-primary-600 dark:text-primary-400"
+                    ? "text-primary-600 dark:text-primary-400 font-bold"
                     : "text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400"
                 }`}
               >
@@ -193,7 +197,12 @@ const Navbar = () => {
                       }`}
                     >
                       <Icon className="w-4 h-4" />
-                      {link.label}
+                      <span>{link.label}</span>
+                      {link.count > 0 && (
+                        <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold rounded-full bg-primary-600 text-white dark:bg-primary-400 dark:text-secondary-900 mr-auto">
+                          {link.count}
+                        </span>
+                      )}
                     </Link>
                   );
                 })}
@@ -202,18 +211,9 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="p-2.5 rounded-lg bg-secondary-100 dark:bg-secondary-700 hover:bg-secondary-200 dark:hover:bg-secondary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
-              aria-label={theme === "light" ? "الوضع الداكن" : "الوضع الفاتح"}
-            >
-              {theme === "light" ? (
-                <Moon className="w-5 h-5 text-secondary-600" />
-              ) : (
-                <Sun className="w-5 h-5 text-yellow-400" />
-              )}
-            </button>
+            <CinematicThemeToggle />
 
+            {/* Mobile hamburger */}
             <button
               ref={hamburgerRef}
               onClick={toggleMobile}
@@ -239,6 +239,7 @@ const Navbar = () => {
         aria-hidden="true"
       />
 
+      {/* Mobile side drawer */}
       <div
         role="dialog"
         aria-modal="true"
@@ -269,7 +270,29 @@ const Navbar = () => {
         </div>
 
         <div className="p-4 space-y-1 overflow-y-auto h-[calc(100%-64px)]">
-          {navLinks.map((link) => renderNavLink(link))}
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={closeMobile}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                  isActive(link.path)
+                    ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
+                    : 'text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-secondary-100 dark:hover:bg-secondary-700'
+                }`}
+              >
+                <Icon className="w-5 h-5 flex-shrink-0" />
+                <span>{link.label}</span>
+                {link.count > 0 && (
+                  <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold rounded-full bg-primary-600 text-white dark:bg-primary-400 dark:text-secondary-900 mr-auto">
+                    {link.count}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </nav>

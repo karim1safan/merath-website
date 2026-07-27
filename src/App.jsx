@@ -27,6 +27,8 @@ const SeerahPage = lazy(() => import('./pages/SeerahPage'));
 const BattlesPage = lazy(() => import('./pages/BattlesPage'));
 const BattleDetailPage = lazy(() => import('./pages/BattleDetailPage'));
 const AdhkarPage = lazy(() => import('./pages/AdhkarPage'));
+const PrayerTimesPage = lazy(() => import('./pages/PrayerTimesPage'));
+const MorningEveningAdhkarPage = lazy(() => import('./pages/MorningEveningAdhkarPage'));
 const HisnPage = lazy(() => import('./pages/HisnPage'));
 const MorningAdhkarPage = lazy(() => import('./pages/MorningAdhkarPage'));
 const EveningAdhkarPage = lazy(() => import('./pages/EveningAdhkarPage'));
@@ -87,6 +89,10 @@ const AnimatedRoutes = () => {
           <Route path="/adhikr/morning" element={<MorningAdhkarPage />} />
           <Route path="/adhikr/evening" element={<EveningAdhkarPage />} />
           <Route path="/adhikr/quotes" element={<SalafQuotesPage />} />
+          <Route path="/adhikr/morning-evening" element={<MorningEveningAdhkarPage />} />
+          <Route path="/prayer" element={<PrayerTimesPage />} />
+          <Route path="/personalities" element={<PersonalitiesPage />} />
+          <Route path="/personalities/:id" element={<PersonalityDetailPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

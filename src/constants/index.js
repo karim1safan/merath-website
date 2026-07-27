@@ -24,6 +24,8 @@ export const ROUTES = {
   SEERAH_BATTLES: '/seerah/battles',
   SEERAH_BATTLE_DETAIL: '/seerah/battles/:id',
   ADHKAR: '/adhikr',
+  PRAYER: '/prayer',
+  MORNING_EVENING_ADHKAR: '/adhikr/morning-evening',
   HISN_ALMUSLIM: '/adhikr/hisn',
   MORNING_ADHKAR: '/adhikr/morning',
   EVENING_ADHKAR: '/adhikr/evening',
