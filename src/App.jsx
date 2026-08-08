@@ -5,6 +5,7 @@ import { ThemeProvider } from './context/ThemeContext.jsx';
 import MainLayout from './layouts/MainLayout';
 import Skeleton from './components/common/Skeleton';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import PwaInstallBanner from './components/common/PwaInstallBanner';
 import { PageTransition } from './components/ui/Motion';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -105,6 +106,7 @@ function App() {
               <AnimatedRoutes />
             </Suspense>
           </MainLayout>
+          <PwaInstallBanner />
         </Router>
       </ThemeProvider>
     </ErrorBoundary>

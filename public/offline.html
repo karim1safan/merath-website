@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#16a34a" />
+    <title>ميراث - لا يوجد اتصال</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: "Rubik", sans-serif;
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        direction: rtl;
+      }
+      .container {
+        text-align: center;
+        padding: 2rem;
+        max-width: 400px;
+      }
+      .icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        background: #16a34a;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 25px rgba(22, 163, 74, 0.3);
+      }
+      .icon svg {
+        width: 40px;
+        height: 40px;
+        fill: white;
+      }
+      h1 {
+        font-size: 1.5rem;
+        color: #166534;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+      }
+      p {
+        font-size: 1rem;
+        color: #475569;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+      .retry-btn {
+        background: #16a34a;
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.2s;
+      }
+      .retry-btn:hover {
+        background: #15803d;
+      }
+      .app-name {
+        margin-top: 2rem;
+        font-size: 0.875rem;
+        color: #94a3b8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+      </div>
+      <h1>لا يوجد اتصال بالإنترنت</h1>
+      <p>يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى</p>
+      <button class="retry-btn" onclick="window.location.reload()">إعادة المحاولة</button>
+      <div class="app-name">ميراث | Merath</div>
+    </div>
+  </body>
+</html>
