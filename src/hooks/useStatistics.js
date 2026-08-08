@@ -9,7 +9,6 @@ const INITIAL_STATISTICS = {
   totalQuestions: 0,
   correctAnswers: 0,
   wrongAnswers: 0,
-  totalTime: 0,
 };
 
 const useStatistics = () => {
@@ -24,7 +23,6 @@ const useStatistics = () => {
       totalQuestions: prev.totalQuestions + result.totalQuestions,
       correctAnswers: prev.correctAnswers + result.score,
       wrongAnswers: prev.wrongAnswers + (result.totalQuestions - result.score),
-      totalTime: prev.totalTime + result.timeSpent,
     }));
   };
 

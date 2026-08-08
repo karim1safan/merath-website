@@ -7,13 +7,11 @@ import {
   CheckCircle2,
   XCircle,
   HelpCircle,
-  Clock,
 } from 'lucide-react';
 import { ROUTES } from '../constants';
 import useStatistics from '../hooks/useStatistics';
 import Card from '../components/common/Card';
 import Button from '../components/common/Button';
-import { formatTime } from '../utils';
 import { FadeIn, StaggerChildren, StaggerItem } from '../components/ui/Motion';
 
 const StatisticsPage = () => {
@@ -69,13 +67,6 @@ const StatisticsPage = () => {
       icon: HelpCircle,
       color: 'bg-purple-100 dark:bg-purple-900/30',
       iconColor: 'text-purple-600 dark:text-purple-400',
-    },
-    {
-      title: 'وقت الدراسة',
-      value: formatTime(statistics.totalTime),
-      icon: Clock,
-      color: 'bg-teal-100 dark:bg-teal-900/30',
-      iconColor: 'text-teal-600 dark:text-teal-400',
     },
   ];
 

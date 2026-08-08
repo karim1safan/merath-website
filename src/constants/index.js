@@ -130,21 +130,14 @@ export const DIFFICULTY_LEVELS = {
   hard: { label: 'صعب', color: 'text-danger' },
 };
 
-export const TIMER_OPTIONS = [
-  { value: 0, label: 'بدون مؤقت' },
-  { value: 300, label: '5 دقائق' },
-  { value: 600, label: '10 دقائق' },
-  { value: 1200, label: '20 دقيقة' },
-];
-
 export const STORAGE_KEYS = {
   THEME: 'quiz-theme',
   STATISTICS: 'quiz-statistics',
   COMPLETED_QUIZZES: 'quiz-completed',
   BOOKMARKS: 'quiz-bookmarks',
-  DAILY_STREAK: 'quiz-daily-streak',
   FRIDAY_REMINDER: 'quiz-friday-reminder',
   PRAYER_CITY: 'quiz-prayer-city',
+  TAFSEER: 'quran-tafseer',
 };
 
 export const PRAYER_CITIES = [

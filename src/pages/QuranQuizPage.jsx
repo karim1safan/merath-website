@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
 import { ROUTES } from '../constants';
@@ -6,15 +6,12 @@ import useQuranQuiz from '../hooks/useQuranQuiz';
 import useQuiz from '../hooks/useQuiz';
 import QuestionCard from '../components/quiz/QuestionCard';
 import ProgressBar from '../components/quiz/ProgressBar';
-import Timer from '../components/quiz/Timer';
 import Button from '../components/common/Button';
 import Spinner from '../components/common/Spinner';
 import EmptyState from '../components/common/EmptyState';
 
 const QuranQuizPage = () => {
   const navigate = useNavigate();
-  const [timerDuration, setTimerDuration] = useState(0);
-  const [showTimerSelect, setShowTimerSelect] = useState(true);
   const hasNavigatedRef = useRef(false);
 
   const { questions, loading, error } = useQuranQuiz(10);
@@ -27,7 +24,6 @@ const QuranQuizPage = () => {
     score,
     percentage,
     completed,
-    timeLeft,
     answeredCount,
     shuffledQuestions,
     selectAnswer,
@@ -35,9 +31,8 @@ const QuranQuizPage = () => {
     goToPrevious,
     goToQuestion,
     finishQuiz,
-    startTimer,
     getQuestionStatus,
-  } = useQuiz(questions, timerDuration);
+  } = useQuiz(questions);
 
   const navigateToResult = useCallback(() => {
     if (hasNavigatedRef.current) return;
@@ -47,14 +42,13 @@ const QuranQuizPage = () => {
         score,
         totalQuestions,
         percentage,
-        timeSpent: timerDuration - timeLeft,
         category: 'quran',
         answers,
         questions: shuffledQuestions,
       },
       replace: true,
     });
-  }, [navigate, score, totalQuestions, percentage, timerDuration, timeLeft, answers, shuffledQuestions]);
+  }, [navigate, score, totalQuestions, percentage, answers, shuffledQuestions]);
 
   useEffect(() => {
     if (completed) navigateToResult();
@@ -63,11 +57,6 @@ const QuranQuizPage = () => {
   useEffect(() => {
     hasNavigatedRef.current = false;
   }, []);
-
-  const handleStartQuiz = () => {
-    setShowTimerSelect(false);
-    startTimer();
-  };
 
   if (loading) {
     return (
@@ -101,62 +90,11 @@ const QuranQuizPage = () => {
     );
   }
 
-  if (showTimerSelect) {
-    return (
-      <div className="max-w-md mx-auto text-center py-12">
-        <div className="flex justify-center mb-6">
-          <div className="p-4 rounded-2xl bg-green-100 dark:bg-green-900/30">
-            <BookOpen className="w-12 h-12 text-green-600 dark:text-green-400" />
-          </div>
-        </div>
-        <h1 className="text-3xl font-bold text-secondary-800 dark:text-secondary-200 mb-2">
-          اختبار القرآن الكريم
-        </h1>
-        <p className="text-secondary-600 dark:text-secondary-400 mb-2">
-          {questions.length} أسئلة من القرآن الكريم
-        </p>
-        <p className="text-sm text-secondary-500 dark:text-secondary-400 mb-8">
-          تعرف على السور، أكمل الآيات، وافهم المعاني
-        </p>
-
-        <div className="bg-white dark:bg-secondary-800 rounded-2xl shadow-lg p-6 mb-8">
-          <h3 className="text-lg font-semibold text-secondary-800 dark:text-secondary-200 mb-4">
-            اختر مدة الاختبار
-          </h3>
-          <div className="space-y-3" role="radiogroup" aria-label="مدة الاختبار">
-            {[0, 300, 600, 1200].map((duration) => (
-              <button
-                key={duration}
-                onClick={() => setTimerDuration(duration)}
-                role="radio"
-                aria-checked={timerDuration === duration}
-                className={`w-full p-3 rounded-xl border-2 transition-all duration-200 ${
-                  timerDuration === duration
-                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
-                    : 'border-secondary-200 dark:border-secondary-700 hover:border-secondary-300 dark:hover:border-secondary-600'
-                }`}
-              >
-                {duration === 0
-                  ? 'بدون مؤقت'
-                  : `${duration / 60} ${duration >= 60 ? 'دقائق' : 'دقيقة'}`}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <Button onClick={handleStartQuiz} size="lg" className="w-full">
-          ابدأ الاختبار
-        </Button>
-      </div>
-    );
-  }
-
   const selectedAnswer = answers[currentIndex];
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6">
       <ProgressBar current={answeredCount + (selectedAnswer !== undefined ? 0 : 1)} total={totalQuestions} />
-      {timerDuration > 0 && <Timer timeLeft={timeLeft} totalTime={timerDuration} />}
       <QuestionCard
         question={currentQuestion}
         questionNumber={currentIndex + 1}

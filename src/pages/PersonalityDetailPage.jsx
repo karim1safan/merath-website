@@ -78,27 +78,27 @@ const PersonalityDetailPage = () => {
         <Markdown
           components={{
             h2: ({ children }) => (
-              <h2 className="text-3xl font-bold text-secondary-800 dark:text-secondary-200 mt-8 mb-4 pb-2 border-b border-secondary-200 dark:border-secondary-700">
+              <h2 className="text-xl md:text-2xl font-bold text-secondary-800 dark:text-secondary-200 mt-8 mb-4 pb-2 border-b border-secondary-200 dark:border-secondary-700">
                 {children}
               </h2>
             ),
             h3: ({ children }) => (
-              <h3 className="text-2xl font-semibold text-secondary-800 dark:text-secondary-200 mt-6 mb-3">
+              <h3 className="text-lg md:text-xl font-semibold text-secondary-800 dark:text-secondary-200 mt-6 mb-3">
                 {children}
               </h3>
             ),
             p: ({ children }) => (
-              <p className="text-lg text-secondary-700 dark:text-secondary-300 leading-relaxed mb-4">
+              <p className="text-sm md:text-base text-secondary-700 dark:text-secondary-300 leading-relaxed mb-4">
                 {children}
               </p>
             ),
             ul: ({ children }) => (
-              <ul className="list-disc list-inside space-y-2 mb-4 text-lg text-secondary-700 dark:text-secondary-300">
+              <ul className="list-disc list-inside space-y-2 mb-4 text-sm md:text-base text-secondary-700 dark:text-secondary-300">
                 {children}
               </ul>
             ),
             li: ({ children }) => (
-              <li className="text-lg leading-relaxed">{children}</li>
+              <li className="text-sm md:text-base leading-relaxed">{children}</li>
             ),
             strong: ({ children }) => (
               <strong className="text-secondary-800 dark:text-secondary-200 font-semibold">
@@ -106,7 +106,7 @@ const PersonalityDetailPage = () => {
               </strong>
             ),
             blockquote: ({ children }) => (
-              <blockquote className="border-r-4 border-primary-500 pr-4 italic text-lg text-secondary-600 dark:text-secondary-400 my-4">
+              <blockquote className="border-r-4 border-primary-500 pr-4 italic text-sm md:text-base text-secondary-600 dark:text-secondary-400 my-4">
                 {children}
               </blockquote>
             ),

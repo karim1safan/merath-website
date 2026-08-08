@@ -31,7 +31,7 @@
 --color-danger: #ef4444;
   --color-warning: #f59e0b;
 
-  --font-cairo: "Cairo", sans-serif;
+  --font-rubik: "Rubik", sans-serif;
   --font-amiri: "Amiri", serif;
 }
 
@@ -42,7 +42,7 @@
 
   body {
     margin: 0;
-    font-family: var(--font-cairo);
+    font-family: var(--font-rubik);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -106,6 +106,10 @@
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  .font-rubik {
+    font-family: var(--font-rubik);
   }
 
   .font-amiri {

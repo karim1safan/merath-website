@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import Card from '../common/Card';
 import Button from '../common/Button';
-import { getResultMessage, formatTime } from '../../utils';
+import { getResultMessage } from '../../utils';
 
 const prefersReducedMotion =
   typeof window !== 'undefined' &&
@@ -11,7 +11,6 @@ const ResultCard = ({
   score,
   totalQuestions,
   percentage,
-  timeSpent,
   onRetry,
   onReview,
   onHome,
@@ -63,7 +62,7 @@ const ResultCard = ({
         initial={prefersReducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.4 }}
-        className="grid grid-cols-3 gap-4 mb-8"
+        className="grid grid-cols-2 gap-4 mb-8"
       >
         <div className="text-center">
           <div className="text-2xl font-bold text-green-600 dark:text-green-400">{score}</div>
@@ -75,12 +74,7 @@ const ResultCard = ({
           </div>
           <div className="text-sm text-secondary-500 dark:text-secondary-400">خاطئة</div>
         </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-secondary-600 dark:text-secondary-400">
-            {formatTime(timeSpent)}
-          </div>
-          <div className="text-sm text-secondary-500 dark:text-secondary-400">الوقت</div>
-        </div>
+
       </motion.div>
 
       <motion.div

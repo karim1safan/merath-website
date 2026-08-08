@@ -6,11 +6,15 @@ import Card from '../components/common/Card';
 import Badge from '../components/common/Badge';
 import EmptyState from '../components/common/EmptyState';
 import PersonalitiesSkeleton from '../components/skeletons/PersonalitiesSkeleton';
+import Pagination from '../components/common/Pagination';
+
+const ITEMS_PER_PAGE = 6;
 
 const PersonalitiesPage = () => {
   const { personalities, loading } = usePersonalities();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const allTags = useMemo(() => {
     const tags = new Set();
@@ -22,11 +26,13 @@ const PersonalitiesPage = () => {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
+    setCurrentPage(1);
   };
 
   const resetFilters = () => {
     setSearchQuery('');
     setSelectedTags([]);
+    setCurrentPage(1);
   };
 
   const filteredPersonalities = useMemo(() => {
@@ -44,6 +50,13 @@ const PersonalitiesPage = () => {
       return matchesSearch && matchesTags;
     });
   }, [personalities, searchQuery, selectedTags]);
+
+  const totalPages = Math.ceil(filteredPersonalities.length / ITEMS_PER_PAGE);
+
+  const paginatedPersonalities = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredPersonalities.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredPersonalities, currentPage]);
 
   if (loading) {
     return <PersonalitiesSkeleton />;
@@ -71,7 +84,10 @@ const PersonalitiesPage = () => {
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
             placeholder="ابحث عن مقال..."
             aria-label="البحث عن مقال"
             className="w-full pr-12 pl-10 py-3 rounded-xl border-2 border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-secondary-800 dark:text-secondary-200 placeholder-secondary-400 dark:placeholder-secondary-500 focus:border-primary-500 dark:focus:border-primary-400 focus:outline-none transition-colors duration-200"
@@ -128,8 +144,9 @@ const PersonalitiesPage = () => {
           onAction={resetFilters}
         />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPersonalities.map((person) => (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {paginatedPersonalities.map((person) => (
             <Link key={person.id} to={`/articles/${person.id}`}>
               <Card hover className="h-full flex flex-col">
                 <div className="flex items-start gap-4 mb-4">
@@ -162,8 +179,15 @@ const PersonalitiesPage = () => {
                 </div>
               </Card>
             </Link>
-          ))}
-        </div>
+            ))}
+          </div>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </>
       )}
     </div>
   );

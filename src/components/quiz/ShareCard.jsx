@@ -1,19 +1,17 @@
 import { useRef, useCallback, useState } from 'react';
 import { Download, Share2, Check } from 'lucide-react';
 import { CATEGORIES } from '../../constants';
-import { getResultMessage, formatTime } from '../../utils';
+import { getResultMessage } from '../../utils';
 
 const CARD_WIDTH = 600;
 const CARD_HEIGHT = 360;
 
-const ShareCard = ({ score, totalQuestions, percentage, timeSpent, category }) => {
+const ShareCard = ({ score, totalQuestions, percentage, category }) => {
   const canvasRef = useRef(null);
   const [copied, setCopied] = useState(false);
 
   const categoryName =
-    category === 'daily'
-      ? 'التحدي اليومي'
-      : CATEGORIES.find((c) => c.id === category)?.name || category;
+    CATEGORIES.find((c) => c.id === category)?.name || category;
 
   const drawCard = useCallback(() => {
     const canvas = canvasRef.current;
@@ -41,55 +39,47 @@ const ShareCard = ({ score, totalQuestions, percentage, timeSpent, category }) =
     ctx.fill();
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 20px Cairo, sans-serif';
+    ctx.font = 'bold 20px Rubik, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('ميراث', CARD_WIDTH / 2, 40);
 
-    ctx.font = '14px Cairo, sans-serif';
+    ctx.font = '14px Rubik, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
     ctx.fillText(categoryName, CARD_WIDTH / 2, 65);
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 72px Cairo, sans-serif';
+    ctx.font = 'bold 72px Rubik, sans-serif';
     ctx.fillText(`${percentage}%`, CARD_WIDTH / 2, 150);
 
-    ctx.font = '18px Cairo, sans-serif';
+    ctx.font = '18px Rubik, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
     ctx.fillText(getResultMessage(percentage), CARD_WIDTH / 2, 185);
 
     const statsY = 230;
-    const colWidth = CARD_WIDTH / 3;
+    const colWidth = CARD_WIDTH / 2;
 
-    ctx.font = 'bold 28px Cairo, sans-serif';
+    ctx.font = 'bold 28px Rubik, sans-serif';
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.fillText(`${score}/${totalQuestions}`, colWidth * 0.5, statsY);
 
-    ctx.font = '13px Cairo, sans-serif';
+    ctx.font = '13px Rubik, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
     ctx.fillText('الإجابات الصحيحة', colWidth * 0.5, statsY + 22);
 
-    ctx.font = 'bold 28px Cairo, sans-serif';
+    ctx.font = 'bold 28px Rubik, sans-serif';
     ctx.fillStyle = '#ffffff';
     ctx.fillText(`${totalQuestions - score}`, colWidth * 1.5, statsY);
 
-    ctx.font = '13px Cairo, sans-serif';
+    ctx.font = '13px Rubik, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
     ctx.fillText('الإجابات الخاطئة', colWidth * 1.5, statsY + 22);
 
-    ctx.font = 'bold 28px Cairo, sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(formatTime(timeSpent), colWidth * 2.5, statsY);
-
-    ctx.font = '13px Cairo, sans-serif';
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-    ctx.fillText('الوقت المستغرق', colWidth * 2.5, statsY + 22);
-
     ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-    ctx.font = '11px Cairo, sans-serif';
+    ctx.font = '11px Rubik, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('اختبر معلوماتك في العلوم الإسلامية', CARD_WIDTH / 2, CARD_HEIGHT - 20);
-  }, [score, totalQuestions, percentage, timeSpent, categoryName]);
+  }, [score, totalQuestions, percentage, categoryName]);
 
   const handleDownload = useCallback(() => {
     drawCard();
@@ -132,12 +122,12 @@ const ShareCard = ({ score, totalQuestions, percentage, timeSpent, category }) =
   }, [drawCard, percentage, categoryName, handleDownload]);
 
   const handleCopyText = useCallback(() => {
-    const text = `حصلت على ${percentage}% في ميراث - ${categoryName}\n✅ ${score} إجابة صحيحة | ❌ ${totalQuestions - score} إجابة خاطئة | ⏱ ${formatTime(timeSpent)}`;
+    const text = `حصلت على ${percentage}% في ميراث - ${categoryName}\n✅ ${score} إجابة صحيحة | ❌ ${totalQuestions - score} إجابة خاطئة`;
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
-  }, [percentage, categoryName, score, totalQuestions, timeSpent]);
+  }, [percentage, categoryName, score, totalQuestions]);
 
   return (
     <div className="space-y-4">

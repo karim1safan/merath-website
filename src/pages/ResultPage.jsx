@@ -22,7 +22,6 @@ const ResultPage = () => {
         score: result.score,
         totalQuestions: result.totalQuestions,
         percentage: result.percentage,
-        timeSpent: result.timeSpent,
         category: result.category,
       });
     }
@@ -68,7 +67,6 @@ const ResultPage = () => {
         score={result.score}
         totalQuestions={result.totalQuestions}
         percentage={result.percentage}
-        timeSpent={result.timeSpent}
         onRetry={handleRetry}
         onReview={handleReview}
         onHome={handleHome}
@@ -78,7 +76,6 @@ const ResultPage = () => {
           score={result.score}
           totalQuestions={result.totalQuestions}
           percentage={result.percentage}
-          timeSpent={result.timeSpent}
           category={result.category}
         />
       </div>

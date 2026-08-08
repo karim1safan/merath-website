@@ -1,41 +1,16 @@
-import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { shuffleArray, calculatePercentage } from '../utils';
 
-const useQuiz = (questions, timerDuration = 0) => {
+const useQuiz = (questions) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [completed, setCompleted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(timerDuration);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const timerRef = useRef(null);
 
   const shuffledQuestions = useMemo(() => {
     if (questions.length === 0) return [];
     return shuffleArray(questions);
   }, [questions]);
-
-  useEffect(() => {
-    if (timerDuration > 0 && isTimerRunning && timeLeft > 0) {
-      timerRef.current = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            clearInterval(timerRef.current);
-            setCompleted(true);
-            setIsTimerRunning(false);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [timerDuration, isTimerRunning, timeLeft]);
 
   const currentQuestion = shuffledQuestions[currentIndex];
   const totalQuestions = shuffledQuestions.length;
@@ -77,10 +52,6 @@ const useQuiz = (questions, timerDuration = 0) => {
 
   const finishQuiz = useCallback(() => {
     setCompleted(true);
-    setIsTimerRunning(false);
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
   }, []);
 
   const restartQuiz = useCallback(() => {
@@ -88,16 +59,7 @@ const useQuiz = (questions, timerDuration = 0) => {
     setAnswers({});
     setScore(0);
     setCompleted(false);
-    setTimeLeft(timerDuration);
-    setIsTimerRunning(timerDuration > 0);
-  }, [timerDuration]);
-
-  const startTimer = useCallback(() => {
-    if (timerDuration > 0) {
-      setIsTimerRunning(true);
-      setTimeLeft(timerDuration);
-    }
-  }, [timerDuration]);
+  }, []);
 
   const percentage = calculatePercentage(score, totalQuestions);
 
@@ -118,8 +80,6 @@ const useQuiz = (questions, timerDuration = 0) => {
     score,
     percentage,
     completed,
-    timeLeft,
-    isTimerRunning,
     answeredCount,
     shuffledQuestions,
     selectAnswer,
@@ -128,7 +88,6 @@ const useQuiz = (questions, timerDuration = 0) => {
     goToQuestion,
     finishQuiz,
     restartQuiz,
-    startTimer,
     getQuestionStatus,
   };
 };
