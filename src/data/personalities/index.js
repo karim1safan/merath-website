@@ -7,7 +7,19 @@ import abuUbayda from './abu-ubayda-ibn-al-jarrah.json';
 import alZubayr from './al-zubayr-ibn-al-awwam.json';
 import alHajjaj from './al-hajjaj-ibn-yusuf.json';
 import mawaqiAlMuwatta from './mawaqi-al-muwatta.json';
+import abuBakr from './abu-bakr-al-siddiq.json';
 
-const personalities = [ibnKathir, alBukhari, ibnRushd, talha, saedBnMueadh, abuUbayda, alZubayr, alHajjaj, mawaqiAlMuwatta];
+const personalities = [
+  abuBakr,
+  ibnKathir,
+  alBukhari,
+  ibnRushd,
+  talha,
+  saedBnMueadh,
+  abuUbayda,
+  alZubayr,
+  alHajjaj,
+  mawaqiAlMuwatta
+];
 
 export default personalities;
