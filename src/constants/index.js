@@ -137,7 +137,6 @@ export const STORAGE_KEYS = {
   BOOKMARKS: 'quiz-bookmarks',
   FRIDAY_REMINDER: 'quiz-friday-reminder',
   PRAYER_CITY: 'quiz-prayer-city',
-  TAFSEER: 'quran-tafseer',
 };
 
 export const PRAYER_CITIES = [

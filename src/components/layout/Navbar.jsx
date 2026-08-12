@@ -6,7 +6,6 @@ import {
   BookOpen,
   Home,
   LayoutGrid,
-  BarChart3,
   Search,
   ScrollText,
   Menu,
@@ -15,7 +14,6 @@ import {
   Heart,
   GraduationCap,
   Users,
-  Bookmark,
 } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
 import { ROUTES } from "../../constants";
@@ -85,14 +83,12 @@ const Navbar = () => {
     { path: ROUTES.SEARCH, label: "بحث", icon: Search },
     { path: ROUTES.QURAN_EXPLORER, label: " المصحف", icon: BookOpen },
     { path: ROUTES.SEERAH, label: "السيرة", icon: ScrollText },
-    { path: ROUTES.STATISTICS, label: "الإحصائيات", icon: BarChart3 },
   ];
 
   const moreLinks = [
     { path: ROUTES.ADHKAR, label: "الأذكار", icon: Heart },
     { path: ROUTES.COURSES, label: "الدورات", icon: GraduationCap },
     { path: ROUTES.PERSONALITIES, label: "مقالات", icon: Users },
-    { path: ROUTES.BOOKMARKS, label: "المفضلة", icon: Bookmark },
   ];
 
   const navLinks = [...mainLinks, ...moreLinks];
