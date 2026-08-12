@@ -10,7 +10,6 @@ import {
   ScrollText,
   Menu,
   X,
-  ChevronDown,
   Heart,
   GraduationCap,
   Users,
@@ -22,13 +21,10 @@ const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
-  const moreRef = useRef(null);
   const hamburgerRef = useRef(null);
   const closeBtnRef = useRef(null);
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);
-  const closeMore = useCallback(() => setMoreOpen(false), []);
   const toggleMobile = useCallback(() => setMobileOpen((prev) => !prev), []);
 
   useEffect(() => {
@@ -43,27 +39,14 @@ const Navbar = () => {
   }, [mobileOpen]);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (moreRef.current && !moreRef.current.contains(e.target)) {
-        setMoreOpen(false);
-      }
-    };
-    if (moreOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [moreOpen]);
-
-  useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         if (mobileOpen) setMobileOpen(false);
-        if (moreOpen) setMoreOpen(false);
       }
     };
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, [mobileOpen, moreOpen]);
+  }, [mobileOpen]);
 
   useEffect(() => {
     if (mobileOpen && closeBtnRef.current) {
@@ -134,7 +117,7 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
-            {mainLinks.map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
@@ -148,53 +131,6 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
-
-            <div className="relative" ref={moreRef}>
-              <button
-                onClick={() => setMoreOpen(!moreOpen)}
-                aria-expanded={moreOpen}
-                className={`flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                  moreLinks.some((l) => isActive(l.path))
-                    ? "text-primary-600 dark:text-primary-400"
-                    : "text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400"
-                }`}
-              >
-                المزيد
-                <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${
-                    moreOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              <div
-                className={`absolute top-full right-0 mt-1 w-44 bg-white dark:bg-secondary-800 rounded-xl shadow-lg border border-secondary-200 dark:border-secondary-700 py-1 z-50 origin-top-right transition-all duration-200 ${
-                  moreOpen
-                    ? "opacity-100 scale-100 translate-y-0"
-                    : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-                }`}
-                aria-hidden={!moreOpen}
-              >
-                {moreLinks.map((link) => {
-                  const Icon = link.icon;
-                  return (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      onClick={closeMore}
-                      className={`flex items-center gap-2 px-3 py-2 text-sm transition-colors duration-200 ${
-                        isActive(link.path)
-                          ? "text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20"
-                          : "text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-secondary-100 dark:hover:bg-secondary-700"
-                      }`}
-                    >
-                      <Icon className="w-4 h-4" />
-                      {link.label}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
           </div>
 
           <div className="flex items-center gap-2">
