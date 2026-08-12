@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, Sun, Moon, MessageSquare } from 'lucide-react';
+import { BookOpen, Sun, Moon, MessageSquare, BookOpenText } from 'lucide-react';
 import { ROUTES } from '../constants';
 
 const AdhkarPage = () => {
@@ -72,6 +72,20 @@ const AdhkarPage = () => {
             </h3>
             <p className="text-sm text-secondary-500 dark:text-secondary-400">
               حكم وأقوال مأثورة من سلف الأمة
+            </p>
+          </div>
+        </Link>
+
+        <Link to={ROUTES.GHARIB_ALQURAN}>
+          <div className="text-right rounded-2xl shadow-lg p-6 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 border-2 border-teal-200 dark:border-teal-800 hover:shadow-xl hover:border-teal-300 dark:hover:border-teal-700 transition-all duration-200 group h-full">
+            <div className="flex items-center gap-3 mb-3">
+              <BookOpenText className="w-6 h-6 text-teal-500" />
+            </div>
+            <h3 className="text-xl font-bold text-secondary-800 dark:text-secondary-200 mb-1">
+              غريب القرآن
+            </h3>
+            <p className="text-sm text-secondary-500 dark:text-secondary-400">
+              بيان معاني المفردات الغريبة في القرآن
             </p>
           </div>
         </Link>

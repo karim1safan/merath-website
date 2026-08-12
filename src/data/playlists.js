@@ -123,4 +123,13 @@ export const PLAYLISTS = [
       "https://www.youtube.com/playlist?list=PLCp8pahoEhI5LjOVYdry3QPKStKklGIyN",
     videoCount: 8,
   },
+  {
+    id: "translate",
+    title: "تراجم الصحابة والعلماء",
+    description: "تراجم الصحابة والعلماء",
+    category: "تر اجم الصحابة والعلماء",
+    channelName: "ش. سعيد الكملي",
+    youtubeUrl: "https://www.youtube.com/playlist?list=PLOp4KAz3ilMQ",
+    videoCount: 20,
+  },
 ];

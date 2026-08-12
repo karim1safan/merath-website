@@ -28,6 +28,7 @@ export const ROUTES = {
   MORNING_ADHKAR: '/adhikr/morning',
   EVENING_ADHKAR: '/adhikr/evening',
   SALAF_QUOTES: '/adhikr/quotes',
+  GHARIB_ALQURAN: '/adhikr/gharib',
   COURSES: '/courses',
 };
 
