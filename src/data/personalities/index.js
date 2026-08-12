@@ -8,9 +8,11 @@ import alZubayr from './al-zubayr-ibn-al-awwam.json';
 import alHajjaj from './al-hajjaj-ibn-yusuf.json';
 import mawaqiAlMuwatta from './mawaqi-al-muwatta.json';
 import abuBakr from './abu-bakr-al-siddiq.json';
+import omarIbnAlKhattab from './omar-ibn-al-khattab.json';
 
 const personalities = [
   abuBakr,
+  omarIbnAlKhattab,
   ibnKathir,
   alBukhari,
   ibnRushd,
