@@ -21,7 +21,7 @@ const Badge = ({
 
   return (
     <span
-      className={`inline-flex items-center font-medium rounded-full ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`inline-flex items-center justify-center text-center leading-tight font-medium rounded-full ${variants[variant]} ${sizes[size]} ${className}`}
     >
       {children}
     </span>

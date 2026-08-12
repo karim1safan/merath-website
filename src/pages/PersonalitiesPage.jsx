@@ -169,9 +169,9 @@ const PersonalitiesPage = () => {
                   <span className="text-xs text-secondary-500 dark:text-secondary-400">
                     {person.era}
                   </span>
-                  <div className="flex gap-1.5">
+                  <div className="flex flex-wrap justify-end gap-1.5">
                     {person.tags.map((tag) => (
-                      <Badge key={tag} variant="primary" size="sm">
+                      <Badge key={tag} variant="primary" size="sm" className="break-words">
                         {tag}
                       </Badge>
                     ))}
