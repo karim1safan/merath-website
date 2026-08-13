@@ -12,49 +12,15 @@ export const PLAYLISTS = [
   // ── الخلافة الراشدة ────────────────────────────────────────────────────────
   {
     id: "abu-bakr",
-    title: "خلافة أبي بكر الصديق رضي الله عنه",
+    title: "الخلافة الراشدة",
     description:
-      "دراسة شاملة عن عصر الخلافة الأولى لأبي بكر الصديق رضي الله عنه، تتناول أبرز أحداثها من ردة الجيوش وحروب الردة وجمع القرآن الكريم وفتح الشام",
+      "رحلة معرفية نتعرف فيها على تاريخ الخلافة الراشدة وسيرة الخلفاء الأربعة، وأبرز إنجازاتهم ومواقفهم. نستكشف من خلالها دروسًا وعبرًا من واحدة من أهم مراحل التاريخ الإسلامي.",
     category: "الخلافة الراشدة",
     channelName: "د. راغب السرجاني",
     youtubeUrl:
-      "https://www.youtube.com/playlist?list=PLSVWH21xe6161smPTRw0XmUo6JC-vnNV_",
-    videoCount: 26,
+      "https://www.youtube.com/playlist?list=PLSVWH21xe617GaGYEFmEYY3XGLYBiR-ZO",
+    videoCount: 288,
   },
-  {
-    id: "omar",
-    title: "خلافة عمر بن الخطاب رضي الله عنه",
-    description:
-      "دراسة معمّقة لعصر الفاروق عمر بن الخطاب رضي الله عنه، أعظم عصور الفتوحات الإسلامية، وكيف بنى دولة العدل والشورى",
-    category: "الخلافة الراشدة",
-    channelName: "د. راغب السرجاني",
-    youtubeUrl:
-      "https://www.youtube.com/playlist?list=PLSVWH21xe616OdE_3O0bPEFNe1vlVc97A",
-    videoCount: 51,
-  },
-  {
-    id: "uthman",
-    title: "خلافة عثمان بن عفان رضي الله عنه",
-    description:
-      "دراسة مفصلة لعصر خلافة عثمان بن عفان رضي الله عنه، وإسهاماته العظيمة في جمع المصحف الشريف وتوسعة الفتوحات وأسباب الفتنة الكبرى",
-    category: "الخلافة الراشدة",
-    channelName: "د. راغب السرجاني",
-    youtubeUrl:
-      "https://www.youtube.com/playlist?list=PLSVWH21xe614Ay9tVYVmNtxlfDB9XqW8a",
-    videoCount: 44,
-  },
-  {
-    id: "ali",
-    title: "خلافة علي بن أبي طالب رضي الله عنه",
-    description:
-      "دراسة شاملة عن عصر الخلافة الرابعة لعلي بن أبي طالب رضي الله عنه، والفتنة الكبرى وما تركته من دروس إيمانية وتاريخية للأمة",
-    category: "الخلافة الراشدة",
-    channelName: "د. راغب السرجاني",
-    youtubeUrl:
-      "https://www.youtube.com/playlist?list=PLSVWH21xe614RW46OKvZ2zcvCIOOGjTlQ",
-    videoCount: 52,
-  },
-
   // ── العقيدة ────────────────────────────────────────────────────────────────
   {
     id: "usul-thalatha",
@@ -65,7 +31,7 @@ export const PLAYLISTS = [
     channelName: "ش. عثمان الخميس",
     youtubeUrl:
       "https://www.youtube.com/playlist?list=PLx3Fh1kiMbrf4Hd2ISMN00247XV1aCyXR",
-    videoCount: 12,
+    videoCount: 10,
   },
   {
     id: "al-qawaid-al-arbaa",
@@ -93,14 +59,14 @@ export const PLAYLISTS = [
   // ── السيرة ─────────────────────────────────────────────────────────────────
   {
     id: "seerah-nabawiyyah",
-    title: "السيرة النبوية",
+    title: "السيرة النبوية الموسم الأول",
     description:
       "السيرة النبوية المشرفة من المهد إلى اللحد، دراسة علمية وافية للحياة الشريفة للنبي صلى الله عليه وسلم بأسلوب قصصي شيّق",
     category: "السيرة",
-    channelName: "د. راغب السرجاني",
+    channelName: "ش. نبيل العوضي",
     youtubeUrl:
-      "https://www.youtube.com/playlist?list=PLSVWH21xe616cBWb8iHdTi8f5XDXNqHYE",
-    videoCount: 96,
+      "https://www.youtube.com/playlist?list=PLlrTbFKrTYXWzAsgSdxC6bAyR-WE1Xxmf",
+    videoCount: 31,
   },
   {
     id: "khalid",
@@ -111,7 +77,7 @@ export const PLAYLISTS = [
     channelName: "د. طارق السويدان",
     youtubeUrl:
       "https://www.youtube.com/playlist?list=PLATlJNRzYr-Bbzm5JWheg7kzyyQL2wIxd",
-    videoCount: 30,
+    videoCount: 66,
   },
   {
     id: "battles",
@@ -122,9 +88,19 @@ export const PLAYLISTS = [
     channelName: "د. نبيل العوضي",
     youtubeUrl:
       "https://www.youtube.com/playlist?list=PLlrTbFKrTYXXHFJEmJnSE1xS4lW45oEJ_",
+    videoCount: 13,
+  },
+  {
+    id: "shamael",
+    title: "الشمايل المحمدية",
+    description:
+      "شرح الشمايل المحمدية للترمذي رحمه الله، وهو من الكتب التي تُعنى بذكر صفات النبي صلى الله عليه وسلم الخَلْقية والخُلُقية",
+    category: "السيرة",
+    channelName: "ش. عبد الرازق البدر",
+    youtubeUrl:
+      "https://www.youtube.com/playlist?list=PLClZ7RmnwNVMCO-6X777e3EuAmSTil7ev",
     videoCount: 45,
   },
-
   // ── الحديث ─────────────────────────────────────────────────────────────────
   {
     id: "hadith",
@@ -133,20 +109,10 @@ export const PLAYLISTS = [
       "شرح مفصل لعلم مصطلح الحديث من خلال المنظومة البيقونية، يتناول أنواع الحديث وطرق تصنيفه وقبوله ورده",
     category: "الحديث",
     channelName: "ش. محمد بن صالح العثيمين",
-    videoCount: 14,
-  },
-  {
-    id: "riyad-salihin",
-    title: "شرح رياض الصالحين",
-    description:
-      "شرح كتاب رياض الصالحين للنووي رحمه الله، وهو من أجمع كتب الحديث في ترقية النفس وتهذيب الأخلاق والتقرب إلى الله",
-    category: "الحديث",
-    channelName: "ش. محمد بن صالح العثيمين",
     youtubeUrl:
-      "https://www.youtube.com/playlist?list=PLClZ7RmnwNVObMqpyiKsMkrJY9fEVEUFB",
-    videoCount: 198,
+      "https://www.youtube.com/playlist?list=PLXS0usquloW95NVJlqnAMyzY1IdmTN-BU",
+    videoCount: 7,
   },
-
   // ── الصحابة ────────────────────────────────────────────────────────────────
   {
     id: "sahaba-part-1",
@@ -179,8 +145,7 @@ export const PLAYLISTS = [
       "تراجم مختصرة ومفيدة لأبرز الصحابة الكرام وأعلام العلماء عبر التاريخ الإسلامي، بأسلوب واضح ومشوّق",
     category: "تراجم",
     channelName: "ش. سعيد الكملي",
-    youtubeUrl:
-      "https://www.youtube.com/playlist?list=PLOp4KAz3ilMQ5GzUJJq5YXJP7ArDJlzMn",
+    youtubeUrl: "https://www.youtube.com/playlist?list=PLOp4KAz3ilMQ",
     videoCount: 20,
   },
 ];
