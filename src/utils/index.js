@@ -92,3 +92,11 @@ export const getQuestionsByCategory = (questions, category) => {
 export const getQuestionsByDifficulty = (questions, difficulty) => {
   return questions.filter((q) => q.difficulty === difficulty);
 };
+
+export const toArabicNumber = (num) => {
+  const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  return String(num)
+    .split('')
+    .map((d) => arabicDigits[Number(d)] ?? d)
+    .join('');
+};

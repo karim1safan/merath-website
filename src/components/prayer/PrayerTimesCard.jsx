@@ -1,5 +1,6 @@
 import { Clock, MapPin } from 'lucide-react';
 import Card from '../common/Card';
+import {toArabicNumber} from "../../utils/index.js";
 
 function PrayerTimesCard({ timings, nextPrayerIndex, currentCity, loading, prayerKeys }) {
   function formatToArabic12(timeStr) {
@@ -7,7 +8,8 @@ function PrayerTimesCard({ timings, nextPrayerIndex, currentCity, loading, praye
     const [hours, minutes] = timeStr.split(':').map(Number);
     const period = hours >= 12 ? 'م' : 'ص';
     const displayHours = hours % 12 || 12;
-    return `${displayHours}:${String(minutes).padStart(2, '0')} ${period}`;
+    const paddedMinutes = String(minutes).padStart(2, '0');
+    return `${toArabicNumber(displayHours)}:${toArabicNumber(paddedMinutes)} ${period}`;
   }
 
   return (

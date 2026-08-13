@@ -1,3 +1,6 @@
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { toArabicNumber } from '../../utils';
+
 const SOCIAL_LINKS = [
   {
     label: 'WhatsApp',
@@ -17,6 +20,16 @@ const SOCIAL_LINKS = [
       </svg>
     ),
   },
+  {
+    label: 'GitHub',
+    url: 'https://github.com/karim1safan',
+    icon: <FaGithub className="w-5 h-5" />,
+  },
+  {
+    label: 'LinkedIn',
+    url: 'https://linkedin.com/in/karimsafan',
+    icon: <FaLinkedin className="w-5 h-5" />,
+  },
 ];
 
 const Footer = () => {
@@ -31,8 +44,8 @@ const Footer = () => {
             </span>
           </div>
 
-          <p className="text-sm text-secondary-500 dark:text-secondary-400">
-            جميع الحقوق محفوظة © {new Date().getFullYear()}
+          <p className="text-sm text-secondary-500 dark:text-secondary-400 font-rubik">
+            جميع الحقوق محفوظة © {toArabicNumber(new Date().getFullYear())}
           </p>
 
           <div className="flex items-center gap-3">
