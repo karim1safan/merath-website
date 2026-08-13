@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, Sun, Moon, MessageSquare, BookOpenText } from 'lucide-react';
+import { BookOpen, Sun, Moon, MessageSquare, BookOpenText, Heart } from 'lucide-react';
 import { ROUTES } from '../constants';
 
 const AdhkarPage = () => {
@@ -86,6 +86,20 @@ const AdhkarPage = () => {
             </h3>
             <p className="text-sm text-secondary-500 dark:text-secondary-400">
               بيان معاني المفردات الغريبة في القرآن
+            </p>
+          </div>
+        </Link>
+
+        <Link to={ROUTES.DUAA}>
+          <div className="text-right rounded-2xl shadow-lg p-6 bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 border-2 border-rose-200 dark:border-rose-800 hover:shadow-xl hover:border-rose-300 dark:hover:border-rose-700 transition-all duration-200 group h-full">
+            <div className="flex items-center gap-3 mb-3">
+              <Heart className="w-6 h-6 text-rose-500" />
+            </div>
+            <h3 className="text-xl font-bold text-secondary-800 dark:text-secondary-200 mb-1">
+              100 دعاء
+            </h3>
+            <p className="text-sm text-secondary-500 dark:text-secondary-400">
+              مئة دعاء من القرآن الكريم والسنة النبوية
             </p>
           </div>
         </Link>

@@ -29,6 +29,7 @@ export const ROUTES = {
   EVENING_ADHKAR: '/adhikr/evening',
   SALAF_QUOTES: '/adhikr/quotes',
   GHARIB_ALQURAN: '/adhikr/gharib',
+  DUAA: '/adhikr/duaa',
   COURSES: '/courses',
 };
 

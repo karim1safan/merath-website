@@ -41,6 +41,7 @@ const EveningAdhkarPage = lazy(() => import("./pages/EveningAdhkarPage"));
 const SalafQuotesPage = lazy(() => import("./pages/SalafQuotesPage"));
 const GharibAlQuranPage = lazy(() => import("./pages/GharibAlQuranPage"));
 const CoursesPage = lazy(() => import("./pages/CoursesPage"));
+const DuaaPage = lazy(() => import("./pages/DuaaPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 const LoadingFallback = () => (
@@ -105,6 +106,7 @@ const AnimatedRoutes = () => {
           <Route path="/adhikr/evening" element={<EveningAdhkarPage />} />
           <Route path="/adhikr/quotes" element={<SalafQuotesPage />} />
           <Route path="/adhikr/gharib" element={<GharibAlQuranPage />} />
+          <Route path="/adhikr/duaa" element={<DuaaPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
