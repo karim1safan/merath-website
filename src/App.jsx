@@ -20,7 +20,7 @@ const TopicsPage = lazy(() => import("./pages/TopicsPage"));
 const QuizPage = lazy(() => import("./pages/QuizPage"));
 const ResultPage = lazy(() => import("./pages/ResultPage"));
 const ReviewPage = lazy(() => import("./pages/ReviewPage"));
-const StatisticsPage = lazy(() => import("./pages/StatisticsPage"));
+
 const PersonalitiesPage = lazy(() => import("./pages/PersonalitiesPage"));
 const PersonalityDetailPage = lazy(
   () => import("./pages/PersonalityDetailPage"),
@@ -88,7 +88,7 @@ const AnimatedRoutes = () => {
           <Route path="/quiz/search" element={<QuizPage />} />
           <Route path="/result" element={<ResultPage />} />
           <Route path="/review" element={<ReviewPage />} />
-          <Route path="/statistics" element={<StatisticsPage />} />
+
           <Route path="/articles" element={<PersonalitiesPage />} />
           <Route path="/articles/:id" element={<PersonalityDetailPage />} />
           <Route path="/quiz/quran" element={<QuranQuizPage />} />

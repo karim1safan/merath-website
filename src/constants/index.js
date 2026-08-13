@@ -8,8 +8,7 @@ export const ROUTES = {
   QUIZ_SEARCH: '/quiz/search',
   RESULT: '/result',
   REVIEW: '/review',
-  STATISTICS: '/statistics',
-  BOOKMARKS: '/bookmarks',
+
   PERSONALITIES: '/articles',
   PERSONALITY: '/articles/:id',
   QURAN_QUIZ: '/quiz/quran',

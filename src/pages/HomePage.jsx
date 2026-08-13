@@ -314,19 +314,7 @@ const HomePage = () => {
                   </p>
                 </Link>
               </StaggerItem>
-              <StaggerItem>
-                <Link to={ROUTES.BOOKMARKS} className="text-center group">
-                  <div className="inline-flex p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 mb-3 group-hover:scale-110 transition-transform">
-                    <Bookmark className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                  </div>
-                  <h3 className="font-semibold text-secondary-800 dark:text-secondary-200 mb-1">
-                    المحفوظات
-                  </h3>
-                  <p className="text-xs text-secondary-500 dark:text-secondary-400">
-                    احفظ الأسئلة للمراجعة لاحقاً
-                  </p>
-                </Link>
-              </StaggerItem>
+
               <StaggerItem>
                 <Link to={ROUTES.CATEGORIES} className="text-center group">
                   <div className="inline-flex p-3 rounded-xl bg-rose-100 dark:bg-rose-900/30 mb-3 group-hover:scale-110 transition-transform">
