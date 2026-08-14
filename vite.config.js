@@ -13,7 +13,7 @@ export default defineConfig({
       manifest: {
         name: 'ميراث - منصة تعليمية إسلامية',
         short_name: 'ميراث',
-        description: 'منصة تعليمية إسلامية لل.quiz والمعرفة الإسلامية',
+        description: 'منصة تعليمية إسلامية للإختبارات والمعرفة الإسلامية',
         lang: 'ar',
         dir: 'rtl',
         theme_color: '#16a34a',

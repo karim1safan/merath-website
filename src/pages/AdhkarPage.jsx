@@ -96,7 +96,7 @@ const AdhkarPage = () => {
               <Heart className="w-6 h-6 text-rose-500" />
             </div>
             <h3 className="text-xl font-bold text-secondary-800 dark:text-secondary-200 mb-1">
-              100 دعاء
+              ١٠٠ دعاء
             </h3>
             <p className="text-sm text-secondary-500 dark:text-secondary-400">
               مئة دعاء من القرآن الكريم والسنة النبوية
